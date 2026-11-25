@@ -1,0 +1,56 @@
+name: Regression Gate
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  gate-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Gate aceita matriz real
+        run: |
+          bash scripts/quality-gate.sh TRACEABILITY_MATRIX.md --allow-warnings
+      - name: Gate falha com R reprovado (coluna 4)
+        run: |
+          python3 -c "
+          import re
+          src = open('TRACEABILITY_MATRIX.md', encoding='utf-8').read()
+          m = re.compile(r'^(\\| R01 \\|[^|]*\\|)[^|]*(\\|.*)$', re.M)
+          src = m.sub(lambda g: g.group(1) + ' \u274c ' + g.group(2), src)
+          open('/tmp/mut.md','w',encoding='utf-8').write(src)
+          "
+          if bash scripts/quality-gate.sh /tmp/mut.md --allow-warnings; then
+            echo 'FALHOU: gate aceitou R01 reprovado'; exit 1
+          fi
+      - name: Gate falha com B reprovado (coluna 5)
+        run: |
+          python3 -c "
+          import re
+          src = open('TRACEABILITY_MATRIX.md', encoding='utf-8').read()
+          m = re.compile(r'^(\\| B02 \\|[^|]*\\|[^|]*\\|)[^|]*(\\|.*)$', re.M)
+          src = m.sub(lambda g: g.group(1) + ' \u274c ' + g.group(2), src)
+          open('/tmp/mut.md','w',encoding='utf-8').write(src)
+          "
+          if bash scripts/quality-gate.sh /tmp/mut.md --allow-warnings; then
+            echo 'FALHOU: gate aceitou B02 reprovado'; exit 1
+          fi
+      - name: Gate falha com evidencia vazia
+        run: |
+          python3 -c "
+          import re
+          src = open('TRACEABILITY_MATRIX.md', encoding='utf-8').read()
+          m = re.compile(r'^(\\| B01 \\|[^|]*\\|[^|]*\\|[^|]*\\|)[^|]*(\\|.*)$', re.M)
+          src = m.sub(lambda g: g.group(1) + '    ' + g.group(2), src)
+          open('/tmp/mut.md','w',encoding='utf-8').write(src)
+          "
+          if bash scripts/quality-gate.sh /tmp/mut.md --allow-warnings; then
+            echo 'FALHOU: gate aceitou evidencia vazia'; exit 1
+          fi
+      - name: Gate falha com parcial sem flag
+        run: |
+          if bash scripts/quality-gate.sh TRACEABILITY_MATRIX.md; then
+            echo 'FALHOU: gate aceitou parciais sem flag --allow-warnings'; exit 1
+          fi
