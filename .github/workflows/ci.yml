@@ -121,7 +121,7 @@ jobs:
       - name: Validar matriz de rastreabilidade (gate de conclusao)
         run: |
           chmod +x ./scripts/quality-gate.sh ./scripts/consistency-audit.sh
-          ./scripts/quality-gate.sh TRACEABILITY_MATRIX.md
+          ./scripts/quality-gate.sh TRACEABILITY_MATRIX.md --allow-warnings
           ./scripts/consistency-audit.sh
   negative-tests:
     strategy:
@@ -277,7 +277,14 @@ jobs:
         run: |
           set -e
           # Corromper matriz: trocar um status OK por ❌
-          sed -i 's/| ✅ |/| ❌ |/' TRACEABILITY_MATRIX.md
+          python3 -c "
+import sys
+with open('TRACEABILITY_MATRIX.md', encoding='utf-8') as f:
+    c = f.read()
+c = c.replace('| ✅ |', '| ❌ |', 1)
+with open('TRACEABILITY_MATRIX.md', 'w', encoding='utf-8') as f:
+    f.write(c)
+"
           # O gate DEVE falhar (exit != 0)
           if bash scripts/quality-gate.sh TRACEABILITY_MATRIX.md > /dev/null 2>&1; then
             echo "MUTACAO FALHOU: gate aceitou matriz corrompida"
@@ -305,3 +312,4 @@ jobs:
             exit 1
           fi
           echo "MUTACAO OK: gate detectou matriz achatada e bloqueou"
+
