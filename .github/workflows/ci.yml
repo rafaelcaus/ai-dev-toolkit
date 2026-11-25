@@ -201,7 +201,7 @@ jobs:
           rm -rf "$CODEX_HOME/skills"
           # Restore deve falhar (ou completar sem MANIFEST, dependendo da implementação)
           # O importante: não deve corromper além do que já está
-          ./install.sh --restore "$BK" --target codex --apply 2>/dev/null || true
+          ./install.sh --restore "$BK" --target codex --apply 2>/dev/null
           echo "OK: restore de backup corrompido não travou o processo"
 
       # 4. ROLLBACK: restauração retorna ao estado pré-instalação
@@ -261,3 +261,47 @@ jobs:
             echo "FALHA: skill do usuário foi removida indevidamente"; exit 1
           fi
           echo "OK: propriedade respeitada"
+
+
+
+  mutation-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Mutation test - gate deve falhar com matriz corrompida
+        shell: bash
+        run: |
+          set -e
+          # Corromper matriz: trocar um status OK por ❌
+          sed -i 's/| ✅ |/| ❌ |/' TRACEABILITY_MATRIX.md
+          # O gate DEVE falhar (exit != 0)
+          if bash scripts/quality-gate.sh TRACEABILITY_MATRIX.md > /dev/null 2>&1; then
+            echo "MUTACAO FALHOU: gate aceitou matriz corrompida"
+            exit 1
+          fi
+          echo "MUTACAO OK: gate detectou matriz corrompida e bloqueou"
+      - name: Mutation test - gate deve falhar com matriz vazia
+        shell: bash
+        run: |
+          set -e
+          printf '# Matriz\n\n| ID | Req | Status | Evid | Commit |\n|----|-----|--------|------|--------|\n' > TRACEABILITY_MATRIX.md
+          if bash scripts/quality-gate.sh TRACEABILITY_MATRIX.md > /dev/null 2>&1; then
+            echo "MUTACAO FALHOU: gate aceitou matriz vazia"
+            exit 1
+          fi
+          echo "MUTACAO OK: gate detectou matriz vazia e bloqueou"
+      - name: Mutation test - gate deve falhar com matriz achatada
+        shell: bash
+        run: |
+          set -e
+          git checkout -- TRACEABILITY_MATRIX.md
+          awk '/^[[:space:]]*\|/ { gsub(/^[[:space:]]+|[[:space:]]+$/, "", $0); buf = buf " " $0; next } { if (buf != "") { print buf; buf = "" } print } END { if (buf != "") print buf }' TRACEABILITY_MATRIX.md > TRACEABILITY_MATRIX.md
+          if bash scripts/quality-gate.sh TRACEABILITY_MATRIX.md > /dev/null 2>&1; then
+            echo "MUTACAO FALHOU: gate aceitou matriz achatada"
+            exit 1
+          fi
+          echo "MUTACAO OK: gate detectou matriz achatada e bloqueou"
