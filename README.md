@@ -82,6 +82,27 @@ arquiteto, investigador, programador, frontend, backend, banco, seguranca, quali
 | **ag-integracoes** | Integrações com ERP, n8n, webhooks e APIs externas. | executar, seguranca |
 | **ag-automacao** | Supervisão contínua, heartbeats e alertas automáticos. | automacao, meta |
 
+## Como funciona o acionamento automatico
+
+O AI Dev Toolkit usa duas formas de acionamento, dependendo da plataforma:
+
+**Codex Desktop/CLI:** o agente principal interpreta pedidos em linguagem natural. Palavras-chave (planeje, corrija, teste, audite, revise, retome) ativam a skill correspondente; tarefas tecnicas especificas podem ser delegadas aos agentes TOML. Nao e necessario memorizar comandos.
+
+**Claude Code:** as skills seguem o formato nativo do Claude Code (SKILL.md com frontmatter YAML) e sao descobertas automaticamente.
+
+**Lovable (via MCP):** skills sao instaladas como workspace skills e ficam disponiveis nos chats do workspace.
+
+## Transparencia operacional
+
+Avisos operacionais sao exibidos com titulos destacados:
+
+### SKILL ATIVADA
+### AGENTE ACIONADO
+### AGENTE CONCLUIDO
+### TESTES CONCLUIDOS
+### AUDITORIA INICIADA
+### ESTAGNACAO DETECTADA
+### PENDENCIA GRAVE
 ## Instalador universal
 
 Menu com seis opcoes: Codex, Claude Code, Lovable (MCP), atualizacoes, restauracao, desinstalacao.
