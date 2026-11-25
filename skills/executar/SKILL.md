@@ -39,3 +39,7 @@ Implementar mudancas planejadas de forma disciplinada, verificando progresso a c
 - Mantenha histórico operacional persistente isolado por tarefa em STATE.json ou HANDOFF.md, sem credenciais.
 - Reforce instruções de transparência após compactação e retomada.
 - Não utilize hooks de reformatação que provoquem ciclos desnecessários ou ocultem respostas completas.
+
+## Execucao sob Acompanhamento
+
+Quando houver automacao ativa, a cada execucao recuperar meta, plano e checkpoints antes de prosseguir. Registrar eventos reais com titulos operacionais. Nao duplicar trabalho ja concluido.

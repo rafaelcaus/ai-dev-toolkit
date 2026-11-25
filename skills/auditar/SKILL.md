@@ -37,3 +37,7 @@ Verificar de forma independente se uma entrega, etapa ou plano atende aos criter
 - Confirme que eventos de concorrência (agentes acionados, concluídos, falhas) foram registrados com evidência.
 - Valide que instruções de transparência foram reforçadas após compactação.
 - Diferencie mecanismos efetivamente automatizados de simples instruções comportamentais.
+
+## Auditoria de Automacao
+
+Verificar que eventos de automacao/supervisao foram registrados com titulos reais (AUTOMACAO ATIVADA, SUPERVISAO ATIVADA, RETOMADA AUTOMATICA, AUTOMACAO CONCLUIDA). Confirmar que o id da automacao consta no checkpoint e que nao ha agendamentos duplicados.

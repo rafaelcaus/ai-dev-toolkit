@@ -37,3 +37,7 @@ Restaurar o estado de trabalho apos interrupcoes, compactacoes de contexto ou tr
 - Ao retomar, restaure não apenas o estado da tarefa mas também as instruções de transparência operacional.
 - Verifique se houve falhas de transporte de subagentes na sessão anterior e ajuste estratégia de concorrência.
 - Reforce regras de transparência e concorrência adaptativa após recuperação.
+
+## Retomada Automatica
+
+Ao retomar via automacao (Heartbeat), verificar id da automacao no checkpoint, recuperar estado atual e continuar pelo proximo passo pendente sem reiniciar.

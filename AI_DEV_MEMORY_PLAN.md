@@ -77,3 +77,8 @@ Instalação/idempotência/conflito/backup/rollback; SQLite integridade/crash/mi
 - Codex: https://developers.openai.com/learn/docs-mcp, https://learn.chatgpt.com/docs/hooks
 - Claude Code: https://code.claude.com/docs/
 - MCP: https://modelcontextprotocol.io/
+
+
+## Nota de integracao Prioridade 1
+
+A skill utomacao (Prioridade 1) acompanha metas via Thread Heartbeat nativo e supervisao externa (Dot/Acessor). O plano AI Dev Memory (Prioridade 2) deve respeitar essa infraestrutura e usa-la para retomadas de longa duracao quando disponivel.

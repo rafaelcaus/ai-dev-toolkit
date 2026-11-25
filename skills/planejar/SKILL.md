@@ -32,3 +32,7 @@ Criar um plano estruturado e verificavel antes de escrever codigo, reduzindo ret
 - Etapas vagas ("implementar X") sem criterio de verificacao
 - Ignorar dependencias externas
 - Nao obter aprovacao antes de executar
+
+## Sugestao de Acompanhamento
+
+Ao apresentar plano complexo, avaliar se o trabalho se beneficia de acompanhamento automatico. Se sim, mencionar a opcao e usar a skill utomacao apos aprovacao.

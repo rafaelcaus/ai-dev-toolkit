@@ -10,7 +10,7 @@ Kit de produtividade para desenvolvimento assistido por IA para Codex Desktop/CL
 
 ## O que e
 
-Conjunto de **16 skills** e **16 perfis de agente** (formato TOML para Codex, Markdown YAML para Claude Code) que automatizam planejamento, execucao, correcao, teste, auditoria e revisao de codigo.
+Conjunto de **17 skills** e **16 perfis de agente** (formato TOML para Codex, Markdown YAML para Claude Code) que automatizam planejamento, execucao, correcao, teste, auditoria e revisao de codigo.
 
 ## As 16 skills
 
@@ -32,6 +32,7 @@ Conjunto de **16 skills** e **16 perfis de agente** (formato TOML para Codex, Ma
 | prompt | Geracao de prompts estruturados. |
 | design-system | Tokens de design em tres camadas. |
 | desempenho | Analise de gargalos mensuraveis. |
+| automacao | Acompanhamento automatico e supervisao continua. |
 
 ## Os 16 agentes
 

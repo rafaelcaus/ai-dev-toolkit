@@ -64,3 +64,7 @@ Não marcar como concluída apenas porque o código foi escrito, o build passou 
 - Ao criar/atualizar metas, registre eventos com cabeçalhos ### 🎯 META ATIVADA / ✅ META CONCLUÍDA.
 - Inclua critérios de conclusão verificáveis no registro operacional persistente.
 - Após compactação, recupere estado da meta e reforce instruções de transparência.
+
+## Integracao com Automacao
+
+Ao criar meta de longa duracao, verificar se acompanhamento automatico e necessario. Se aprovado pelo usuario, usar a skill utomacao para configurar Heartbeat ou supervisor externo. Registrar id da automacao no checkpoint da meta.
