@@ -73,3 +73,14 @@
 | Subagentes NEW_TASK com payload vazio | Delegação paralela falha sistematicamente | 9+ casos confirmados nesta sessão |
 | Blocos "Processando" recolhidos | Transparência reduzida pós-resposta | Issues #22334, #34418, #23221 (abertos) |
 
+
+
+## Correções e Validações Consolidadas (v3)
+
+| ID | Item | Status | Evidência | Commit/Link |
+|----|------|--------|-----------|-------------|
+| C11 | Quality Gate: colunas R/C vs B separadas; IDs únicos; status permitidos; evidência obrigatória | ✅ | WSL: matriz real rc=0; R01/B02 reprovado rc=1; B01 sem evidência rc=1; dup ID rc=1; status inválido rc=1; parcial sem flag rc=1. CI 11/11 verde | PR #4 ad86e379, PR #5 00fa6ed, PR #6 3c5f0d3 |
+| C12 | install.ps1: restore valida MANIFEST.target, rejeita path traversal, valida SHA256 antes e depois | ✅ | Perfil descartável Windows: 8 cenários PASS (rc=0); corrompido rc=1; hash divergente rc=1 | PR #5 f9372fc, 00fa6ed |
+| C13 | Pacote particular: agentRoot respeita AGENTS_HOME/ProfileRoot; RestoreBackup fiel ao manifest | ✅ | Perfil isolado Windows: 72 skills + 16 agentes; corrupt+restore+reapply rc=0; pre-existing preservada | qa/codex-hardening-v1.7 a897e34, 4248181 |
+| C14 | Licenciamento e procedência (design-system MIT + Pexels URL-only + BM25 original) | ✅ | skills/design-system/LICENSE cobre todos os arquivos; rg sem dados pessoais (Millano/api_key/password/secret/C:\Users\RAFAEL) | f12a1e7, VALIDATION_REPORT.md |
+
