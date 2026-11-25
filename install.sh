@@ -270,8 +270,8 @@ if [ -n "$TARGET" ]; then
   esac
   exit 0
 fi
-c=$(show_menu)
-case "$c" in
+show_menu
+case "$choice" in
   1) install_target "codex" ;;
   2) install_target "claude" ;;
   3) show_lovable ;;
