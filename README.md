@@ -2,13 +2,15 @@
 
 **Nao execute o instalador ate a conclusao da auditoria final.** Esta versao (1.7.1-experimental) corrige falhas identificadas na revisao anterior. O aviso sera removido apos validacao completa.
 
+---
+
 # AI Dev Toolkit
 
-Kit de produtividade para desenvolvimento assistido por IA, projetado para Codex Desktop/CLI e Claude Code.
+Kit de produtividade para desenvolvimento assistido por IA para Codex Desktop/CLI e Claude Code.
 
 ## O que e
 
-Conjunto de **16 skills** e **16 perfis de agente** que automatizam planejamento, execucao, correcao, teste, auditoria e revisao de codigo. Os agentes sao acionados automaticamente conforme a natureza da tarefa.
+Conjunto de **16 skills** e **16 perfis de agente** (formato TOML para Codex, Markdown YAML para Claude Code) que automatizam planejamento, execucao, correcao, teste, auditoria e revisao de codigo.
 
 ## As 16 skills
 
@@ -22,120 +24,68 @@ Conjunto de **16 skills** e **16 perfis de agente** que automatizam planejamento
 | auditar | Auditoria independente de entregas. |
 | revisar | Revisao de codigo antes de merge. |
 | retomar | Recupera contexto apos compactacao. |
-| agentes | Delegacao paralela de tarefas. |
-| banco | Boas praticas para PostgreSQL e Supabase. |
-| react | Otimizacoes de React e Next.js. |
+| agentes | Delegacao paralela e concorrencia adaptativa. |
+| banco | Boas praticas PostgreSQL/Supabase. |
+| react | Otimizacoes React/Next.js. |
 | visual | Diretrizes de interface web. |
-| seguranca | Vulnerabilidades e configuracoes arriscadas. |
+| seguranca | Vulnerabilidades e config. arriscadas. |
 | prompt | Geracao de prompts estruturados. |
-| design-system | Tokens e especificacao de componentes. |
+| design-system | Tokens de design em tres camadas. |
 | desempenho | Analise de gargalos mensuraveis. |
 
 ## Os 16 agentes
 
-| Agente | Especialidade |
-|--------|---------------|
-| arquiteto | Arquitetura e planejamento tecnico. |
-| investigador | Causa-raiz de bugs. |
-| programador | Implementacao geral. |
-| frontend | React, TypeScript e interfaces. |
-| backend | APIs e logica de negocio. |
-| banco | PostgreSQL e Supabase. |
-| seguranca | Revisao de seguranca. |
-| qualidade | Revisao independente. |
-| testador | Testes automatizados e E2E. |
-| designer | UI/UX e design system. |
-| desempenho | Otimizacao e gargalos. |
-| infra | Docker e DevOps. |
-| pesquisador | Documentacao oficial. |
-| auditor | Auditoria do plano e projeto. |
-| integracoes | ERP, webhooks e sincronizacao. |
-| automacao | Windows e PowerShell. |
+arquiteto, investigador, programador, frontend, backend, banco, seguranca, qualidade, testador, designer, desempenho, infra, pesquisador, auditor, integracoes, automacao.
+
+## Instalador universal
+
+Menu com seis opcoes: Codex, Claude Code, Lovable (MCP), atualizacoes, restauracao, desinstalacao.
+
+- **Windows**: `pwsh ./install.ps1` (requer PowerShell 7+)
+- **Linux/macOS**: `./install.sh` (requer bash)
+
+### Recursos comprovados
+
+- Previa sem escrita por padrao; aplicacao so com `-Apply` / `--apply`.
+- Backup com hash SHA256 por arquivo antes de qualquer sobrescrita.
+- Manifesto OWNERSHIP.json com lista de arquivos gerenciados.
+- Desinstalacao e restauracao exigem confirmacao explicita.
+- Desinstalacao/remove apenas componentes gerenciados; nunca toca em terceiros.
+- Restauracao retorna arquivos aos caminhos originais.
+- Atualizador apenas INFORMA; nao executa codigo remoto automaticamente.
+- Lovable: apenas instrucoes sobre o MCP oficial; sem automacao.
+- Ciclo completo (instalar → reinstalar → desinstalar → restaurar) validado em Windows.
+
+### Limitacoes conhecidas
+
+- CI multiplataforma (Windows/Linux/macOS) incluido em `.github/workflows/ci.yml`; execucao depende do GitHub Actions.
+- Integração Lovable via MCP nao testada de ponta a ponta nesta versao.
+- Subagentes reais do Codex podem apresentar falha de transporte de payload em algumas sessoes; ver skill `agentes` para protocolo de diagnostico.
+- Blocos intermediarios do Codex Desktop podem recolher apos conclusao; nenhuma configuracao nativa encontrada para manter sempre expandido (`conversationDetailMode = STEPS_COMMANDS` nao controla isso).
+- install.sh testado sintaticamente (bash -n); execucao fisica em Linux/macOS pendente.
 
 ## Seguranca e privacidade
 
-O instalador nao coleta, nao transmite e nao armazena credenciais, tokens, senhas, chaves de API, informacoes de empresas ou clientes, caminhos pessoais, historico do Git, conversas ou backups. Nenhuma alteracao em permissoes do sistema ou credenciais existentes.
+O instalador NAO coleta, NAO transmite e NAO armazena credenciais, tokens, senhas, chaves de API, informacoes de empresas ou clientes, caminhos pessoais, historico do Git, conversas ou backups. Nenhuma alteracao em permissoes do sistema ou credenciais existentes.
 
-## Instalacao (Codex Desktop/CLI)
+## Restaurar backup
 
-```powershell
-git clone https://github.com/rafaelcaus/ai-dev-toolkit.git
-cd ai-dev-toolkit
-pwsh ./install.ps1
+```
+pwsh ./install.ps1 -RestoreBackup caminho-do-backup [-Apply] [-Target codex|claude]
+./install.sh --restore caminho-do-backup [--target codex|claude] [--apply]
 ```
 
-A previa e o padrao. Use -Apply para confirmar. Linux/macOS: ./install.sh
+## Desinstalar
 
-## Restauracao
-
-```powershell
-pwsh ./install.ps1 -RestoreBackup caminho-do-backup
+```
+pwsh ./install.ps1 -Uninstall [-Target codex|claude] [-Apply]
+./install.sh --uninstall [--target codex|claude] [--apply]
 ```
 
-## Versao atual
+## Versao
 
-**v1.7** — base 3426959 da branch qa/codex-hardening-v1.7. Edicao publica em preparacao.
-
-## Testes comprovados
-
-Tres suites automatizadas passaram: instalador, previa completa e hooks escopados. Limitacao conhecida: fixtures sinteticas; nao comprovam integracao nativa com o Codex Desktop nem execucao real de subagentes.
+**v1.7.1-experimental** — commit ccaccbc. Aviso experimental sera removido apos validacao completa.
 
 ## Licenca
 
 Skills originais deste repositorio. Consulte LICENSE em cada skill de terceiros redistribuida.
-
----
-
-Prompt pronto para instalar:
-
-```
-Instale o AI Dev Toolkit no meu perfil. Faca uma previa primeiro. Se estiver correto, aplique. Preserve minhas configuracoes existentes.
-```
-## Instalador universal
-
-O instalador oferece um menu com seis opcoes:
-
-1. Instalar no Codex
-2. Instalar no Claude Code
-3. Instalar no Lovable (MCP oficial)
-4. Verificar atualizacoes
-5. Restaurar backup
-6. Desinstalar
-
-### Instalacao no Codex
-`pwsh ./install.ps1 -Target codex` — para aplicar, adicione `-Apply`.
-
-### Instalacao no Claude Code
-`pwsh ./install.ps1 -Target claude` — para aplicar, adicione `-Apply`.
-
-### Instalacao no Lovable
-`pwsh ./install.ps1 -Target lovable` — apresenta o fluxo MCP. A instalacao via MCP exige agente com acesso Lovable conectado pelo navegador (OAuth oficial). Alternativa manual: copie o conteudo de skills/ para o workspace Lovable.
-
-### Verificar atualizacoes
-`pwsh ./install.ps1 -Target updates` — compara commit local com origin/main.
-
-### Restaurar backup
-`pwsh ./install.ps1 -RestoreBackup caminho-do-backup`.
-
-### Desinstalar
-`pwsh ./install.ps1 -Uninstall` — remove apenas os componentes gerenciados pelo kit, com backup previo.
-## Formato de agentes por plataforma
-
-- Codex Desktop/CLI: TOML em ~/.agents/ (16 perfis).
-- Claude Code: Markdown com frontmatter YAML em ~/.claude/agents/ (16 perfis equivalentes).
-- Lovable: adaptacao ao mecanismo nativo de subagentes (nao automatizado).
-
-## Transparencia e concorrencia
-
-As skills agentes, executar, meta, retomar e auditar incluem instrucoes para:
-
-- Preservar titulos Markdown ###, emojis e negrito nos registros operacionais.
-- Manter historico operacional persistente por tarefa, sem credenciais.
-- Reforcar instrucoes apos compactacao e retomada.
-- Gerenciar concorrencia de subagentes de forma adaptativa, registrando eventos reais.
-- Distinguir tentativas rejeitadas de execucoes bem-sucedidas.
-
-## Limitacao conhecida (documentada)
-
-- conversationDetailMode = STEPS_COMMANDS existe em ~/.codex/config.toml sob [desktop], mas nao ha configuracao nativa documentada nesta versao do Codex Desktop que mantenha blocos intermediarios expandidos apos a conclusao da resposta. Consulte os issues openai/codex #22334, #34418 e #23221 para acompanhar o status.
-- Integracao Lovable via MCP e orientada por instrucao; o instalador nao automatiza OAuth nem selecao de workspace.

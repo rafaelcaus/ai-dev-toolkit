@@ -1,0 +1,115 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test install.ps1 preview (codex)
+        shell: pwsh
+        run: |
+          $env:CODEX_HOME = "$env:RUNNER_TEMP/test-codex"
+          $env:CLAUDE_HOME = "$env:RUNNER_TEMP/test-claude"
+          New-Item -ItemType Directory -Force $env:CODEX_HOME, $env:CLAUDE_HOME | Out-Null
+          pwsh -NoProfile -File ./install.ps1 -Target codex
+          if ($LASTEXITCODE -ne 0) { throw "preview codex failed" }
+      - name: Test install.ps1 apply (codex)
+        shell: pwsh
+        run: |
+          $env:CODEX_HOME = "$env:RUNNER_TEMP/test-codex"
+          pwsh -NoProfile -File ./install.ps1 -Target codex -Apply
+          if ($LASTEXITCODE -ne 0) { throw "apply codex failed" }
+          $count = (Get-ChildItem (Join-Path $env:CODEX_HOME "skills") -Directory).Count
+          if ($count -ne 16) { throw "expected 16 skills, got $count" }
+          if (-not (Test-Path (Join-Path $env:CODEX_HOME "OWNERSHIP.json"))) { throw "OWNERSHIP.json missing" }
+      - name: Test idempotence (second install)
+        shell: pwsh
+        run: |
+          $env:CODEX_HOME = "$env:RUNNER_TEMP/test-codex"
+          $before = (Get-ChildItem $env:CODEX_HOME -Directory -Filter "backup-ai-dev-toolkit-*").Count
+          pwsh -NoProfile -File ./install.ps1 -Target codex -Apply
+          $after = (Get-ChildItem $env:CODEX_HOME -Directory -Filter "backup-ai-dev-toolkit-*").Count
+          if ($after -le $before) { throw "expected new backup on reinstall" }
+      - name: Test uninstall requires -Apply
+        shell: pwsh
+        run: |
+          $env:CODEX_HOME = "$env:RUNNER_TEMP/test-codex"
+          $before = (Get-ChildItem (Join-Path $env:CODEX_HOME "skills") -Directory).Count
+          pwsh -NoProfile -File ./install.ps1 -Uninstall -Target codex
+          $after = (Get-ChildItem (Join-Path $env:CODEX_HOME "skills") -Directory).Count
+          if ($after -ne $before) { throw "uninstall without -Apply modified files" }
+      - name: Test uninstall with -Apply
+        shell: pwsh
+        run: |
+          $env:CODEX_HOME = "$env:RUNNER_TEMP/test-codex"
+          pwsh -NoProfile -File ./install.ps1 -Uninstall -Target codex -Apply
+          $after = (Get-ChildItem (Join-Path $env:CODEX_HOME "skills") -Directory -ErrorAction SilentlyContinue).Count
+          if ($after -ne 0) { throw "uninstall with -Apply did not remove" }
+      - name: Test restore
+        shell: pwsh
+        run: |
+          $env:CODEX_HOME = "$env:RUNNER_TEMP/test-codex"
+          $bk = (Get-ChildItem $env:CODEX_HOME -Directory -Filter "backup-ai-dev-toolkit-uninstall-*" | Sort-Object Name | Select-Object -Last 1).FullName
+          pwsh -NoProfile -File ./install.ps1 -RestoreBackup $bk -Target codex -Apply
+          $count = (Get-ChildItem (Join-Path $env:CODEX_HOME "skills") -Directory).Count
+          if ($count -ne 16) { throw "expected 16 skills after restore, got $count" }
+      - name: Test install.ps1 preview (claude)
+        shell: pwsh
+        run: |
+          $env:CLAUDE_HOME = "$env:RUNNER_TEMP/test-claude"
+          pwsh -NoProfile -File ./install.ps1 -Target claude
+          if ($LASTEXITCODE -ne 0) { throw "preview claude failed" }
+
+  test-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bash syntax check
+        run: bash -n ./install.sh
+      - name: Test install.sh preview (codex)
+        run: |
+          export CODEX_HOME="$RUNNER_TEMP/test-codex"
+          export CLAUDE_HOME="$RUNNER_TEMP/test-claude"
+          mkdir -p "$CODEX_HOME" "$CLAUDE_HOME"
+          chmod +x ./install.sh
+          ./install.sh --target codex
+      - name: Test install.sh apply (codex)
+        run: |
+          export CODEX_HOME="$RUNNER_TEMP/test-codex"
+          ./install.sh --target codex --apply
+          count=$(find "$CODEX_HOME/skills" -mindepth 1 -maxdepth 1 -type d | wc -l)
+          if [ "$count" != "16" ]; then echo "expected 16 skills, got $count"; exit 1; fi
+          if [ ! -e "$CODEX_HOME/OWNERSHIP.json" ]; then echo "OWNERSHIP.json missing"; exit 1; fi
+      - name: Test uninstall requires --apply
+        run: |
+          export CODEX_HOME="$RUNNER_TEMP/test-codex"
+          before=$(find "$CODEX_HOME/skills" -mindepth 1 -maxdepth 1 -type d | wc -l)
+          ./install.sh --uninstall --target codex
+          after=$(find "$CODEX_HOME/skills" -mindepth 1 -maxdepth 1 -type d | wc -l)
+          if [ "$after" != "$before" ]; then echo "uninstall without --apply modified files"; exit 1; fi
+      - name: Test uninstall with --apply
+        run: |
+          export CODEX_HOME="$RUNNER_TEMP/test-codex"
+          ./install.sh --uninstall --target codex --apply
+          after=$(find "$CODEX_HOME/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l)
+          if [ "$after" != "0" ]; then echo "uninstall with --apply did not remove"; exit 1; fi
+
+  test-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bash syntax check
+        run: bash -n ./install.sh
+      - name: Test install.sh preview (codex)
+        run: |
+          export CODEX_HOME="$RUNNER_TEMP/test-codex"
+          export CLAUDE_HOME="$RUNNER_TEMP/test-claude"
+          mkdir -p "$CODEX_HOME" "$CLAUDE_HOME"
+          chmod +x ./install.sh
+          ./install.sh --target codex
