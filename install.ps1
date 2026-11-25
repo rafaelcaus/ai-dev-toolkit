@@ -9,6 +9,7 @@ param(
 )
 $ErrorActionPreference = "Stop"
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
+$destHome = $env:USERPROFILE
 
 function Show-Menu {
     Write-Host ""
@@ -32,7 +33,7 @@ function Get-HomeDir([string]$Target) {
 
 function Get-AgentsHome([string]$Target) {
     switch ($Target) {
-        "codex"  { Join-Path $destHome ".agents" }
+        "codex"  { Join-Path $destHome "agents" }
         "claude" { Join-Path (Get-HomeDir "claude") "agents" }
         default  { throw "Alvo invalido: $Target" }
     }
