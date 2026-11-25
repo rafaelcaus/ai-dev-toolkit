@@ -14,7 +14,7 @@
 | ID | Requisito | Status | Evidência | Commit/Link |
 |----|-----------|--------|-----------|-------------|
 | R01 | Instalação em ambiente descartável | ✅ | Windows TEMP + WSL /tmp testados | 0f78fe4, 6e1a30a |
-| R02 | Testes automatizados | ⚠️ | CI verde, mas testes negativos ausentes | .github/workflows/ci.yml |
+| R02 | Testes automatizados | ✅ | CI com testes positivos + negative-tests (6 cenarios x 3 SOs) + mutation-tests; run 45605819626 success | .github/workflows/ci.yml, 45605819626 |
 | R03 | Continuidade após compactação | ✅ | Sessão atual recuperou contexto via HANDOFF | Esta sessão |
 | R04 | Skills personalizadas (17 públicas) | ✅ | Listadas e instaláveis | skills/ |
 | R05 | Delegação de tarefas (16 agentes) | ⚠️ | TOMLs presentes; execução real não comprovada para todos | agents/ |
@@ -30,7 +30,7 @@
 | R15 | Instalador universal (Codex/Claude/Lovable) | ✅ | install.ps1 + install.sh funcionais | 6e1a30a, 073de34 |
 | R16 | Portabilidade, atualização, backup, restauração | ✅ | Ciclos completos testados em 3 ambientes | VALIDATION_REPORT.md |
 | R17 | Segurança e privacidade (sem credenciais/dados pessoais) | ✅ | rg -i Millano/RAFAEL/api_key = 0 hits | VALIDATION_REPORT.md |
-| R18 | README profissional em PT-BR | ⚠️ | Existe mas falta detalhamento individual das 17 skills e 16 agentes | README.md |
+| R18 | README profissional em PT-BR | ✅ | Lista detalhada das 17 skills + 16 agentes com exemplos de acionamento; secoes de instalacao, atualizacao, restauracao, desinstalacao, seguranca | f286652, 32a942c |
 | R19 | Licenças auditadas | ✅ | LICENSE por skill + procedência de Pexels e BM25 documentadas | f12a1e7 |
 | R20 | Integração Lovable MCP | ✅ | Ciclo CRUD + massa 17/17 validado | e954579 |
 | R21 | Integração Claude Code | ✅ | Agentes MD + ciclo instalar/desinstalar/restaurar | 6e1a30a |
@@ -60,7 +60,7 @@
 | B01 | Matriz persistente de requisitos | Codex/Claude/Lovable | 🔄 Em progresso | Este arquivo |
 | B02 | Validador de cobertura pré-conclusão | Codex (update_goal) | ❌ Não implementado | Requer hook ou wrapper |
 | B03 | Invalidação seletiva de evidências | Todas | ❌ Não implementado | Quando código muda, evidência antiga é invalidada |
-| B04 | Testes negativos obrigatórios no CI | GitHub Actions | ❌ Não implementado | Propriedade, conflito, corrupção, rollback |
+| B04 | Testes negativos obrigatórios no CI | GitHub Actions | ✅ Implementado | Job negative-tests com 6 cenarios x 3 SOs + mutation-test (vazio + achatada); run 45605819626 success | .github/workflows/ci.yml |
 | B05 | Auditoria independente automática | Codex | ❌ Não implementado | Subagente auditor com critérios verificáveis |
 | B06 | Bloqueio de merge/conclusão com falhas | GitHub/Codex | ⚠️ Branch protection possível; update_goal sem gate nativo | Documentar limitação |
 
