@@ -55,8 +55,9 @@ backup_existing(){
     fi
   done
   local srcExt="toml"
-  [ "$t" = "claude" ] && srcExt="md"
-  for a in "$here/agents"/*.$srcExt; do
+  local srcDir="$here/agents"
+  if [ "$t" = "claude" ]; then srcExt="md"; srcDir="$here/agents/claude"; fi
+  for a in "$srcDir"/*.$srcExt; do
     [ -e "$a" ] || continue
     local name=$(basename "$a")
     local p="$agentsHome/$name"
@@ -148,8 +149,9 @@ uninstall_target(){
     fi
   done
   local srcExt="toml"
-  [ "$t" = "claude" ] && srcExt="md"
-  for a in "$here/agents"/*.$srcExt; do
+  local srcDir="$here/agents"
+  if [ "$t" = "claude" ]; then srcExt="md"; srcDir="$here/agents/claude"; fi
+  for a in "$srcDir"/*.$srcExt; do
     [ -e "$a" ] || continue
     local name=$(basename "$a")
     local p="$agentsHome/$name"
