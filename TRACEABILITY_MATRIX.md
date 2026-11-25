@@ -1,7 +1,7 @@
 ﻿# Matriz de Rastreabilidade — AI Dev Toolkit
 
 **Última atualização:** 2026-11-25
-**Status:** REPROVADO pela auditoria independente — pendências abertas abaixo
+**Status:** EM VALIDACAO - pendencias criticas corrigidas (PR #1 merged 5f13fd8, CI 10/10 verde), aguardando aprovacao externa
 
 ## Legenda
 - ✅ Evidência verificável existe e está vinculada
@@ -49,6 +49,9 @@
 | C05 | Reclassificar falha de subagentes (NÃO é limite de concorrência) | ✅ | Classificado como falha de transporte NEW_TASK; regra de máx. 3 agentes aplicada | Esta sessão |
 | C06 | Validar pacote PARTICULAR e integrações | ✅ | test-installer.ps1 PASS (preview, isolated install, dedup, hook merge, config/auth, idempotence, restore, conflito) + test-full-package-preview.ps1 PASS (108 op sem escrita). 1 colisão frontmatter orchestrator resolvida pelo instalador. | Commit 3426959, branch qa/codex-hardening-v1.7 |
 | C07 | Matriz completa de rastreabilidade | ✅ | Este arquivo (TRACEABILITY_MATRIX.md) | HEAD |
+| C08 | Restore de agentes com validacao de conflito/falha (install.sh) | OK | 5 cenarios de regressao PASS em WSL | PR #1, 0ed9305, run 45605819626 |
+| C09 | install.ps1: destHome indefinido + caminho errado de agentes | OK | Preview rc=0; apply real em perfil isolado Windows: 17 skills + 16 agentes | PR #1, 0ed9305, run 45605819626 |
+| C10 | Remover referencia pessoal em automacao/SKILL.md | OK | Texto generico; zero mencoes a Rafael/ACESSOR | PR #1, 0ed9305 |
 
 ## Barreiras Técnicas de Qualidade (a implementar)
 
