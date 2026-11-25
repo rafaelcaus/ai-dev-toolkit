@@ -85,7 +85,7 @@ pwsh ./install.ps1 -Uninstall [-Target codex|claude] [-Apply]
 
 ## Versao
 
-**v1.7.1-experimental** — commit ccaccbc. Aviso experimental sera removido apos validacao completa.
+**v1.7.1-experimental** (branch main, ver ultimo commit em https://github.com/rafaelcaus/ai-dev-toolkit/commits/main). Aviso experimental sera removido apos validacao completa.
 
 ## Licenca
 
