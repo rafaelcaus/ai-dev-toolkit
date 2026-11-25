@@ -26,7 +26,7 @@ jobs:
           pwsh -NoProfile -File ./install.ps1 -Target codex -Apply
           if ($LASTEXITCODE -ne 0) { throw "apply codex failed" }
           $count = (Get-ChildItem (Join-Path $env:CODEX_HOME "skills") -Directory).Count
-          if ($count -ne 16) { throw "expected 16 skills, got $count" }
+          if ($count -ne 17) { throw "expected 17 skills, got $count" }
           if (-not (Test-Path (Join-Path $env:CODEX_HOME "OWNERSHIP.json"))) { throw "OWNERSHIP.json missing" }
       - name: Test idempotence (second install)
         shell: pwsh
@@ -58,7 +58,7 @@ jobs:
           $bk = (Get-ChildItem $env:CODEX_HOME -Directory -Filter "backup-ai-dev-toolkit-uninstall-*" | Sort-Object Name | Select-Object -Last 1).FullName
           pwsh -NoProfile -File ./install.ps1 -RestoreBackup $bk -Target codex -Apply
           $count = (Get-ChildItem (Join-Path $env:CODEX_HOME "skills") -Directory).Count
-          if ($count -ne 16) { throw "expected 16 skills after restore, got $count" }
+          if ($count -ne 17) { throw "expected 17 skills after restore, got $count" }
       - name: Test install.ps1 preview (claude)
         shell: pwsh
         run: |
@@ -84,7 +84,7 @@ jobs:
           export CODEX_HOME="$RUNNER_TEMP/test-codex"
           ./install.sh --target codex --apply
           count=$(find "$CODEX_HOME/skills" -mindepth 1 -maxdepth 1 -type d | wc -l)
-          if [ "$count" != "16" ]; then echo "expected 16 skills, got $count"; exit 1; fi
+          if [ "$count" != "17" ]; then echo "expected 17 skills, got $count"; exit 1; fi
           if [ ! -e "$CODEX_HOME/OWNERSHIP.json" ]; then echo "OWNERSHIP.json missing"; exit 1; fi
       - name: Test uninstall requires --apply
         run: |
