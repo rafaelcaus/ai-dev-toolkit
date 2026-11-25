@@ -58,10 +58,10 @@
 | ID | Mecanismo | Plataforma | Status | Notas |
 |----|-----------|------------|--------|-------|
 | B01 | Matriz persistente de requisitos | Codex/Claude/Lovable | 🔄 Em progresso | Este arquivo |
-| B02 | Validador de cobertura pré-conclusão | Codex (update_goal) | ❌ Não implementado | Requer hook ou wrapper |
-| B03 | Invalidação seletiva de evidências | Todas | ❌ Não implementado | Quando código muda, evidência antiga é invalidada |
+| B02 | Validador de cobertura pré-conclusão | Codex (update_goal) | 🔒 Bloqueado por limitação da plataforma (update_goal sem gate nativo) | Requer hook ou wrapper |
+| B03 | Invalidação seletiva de evidências | Todas | 🔒 Bloqueado por limitação da plataforma | Quando código muda, evidência antiga é invalidada |
 | B04 | Testes negativos obrigatórios no CI | GitHub Actions | ✅ Implementado | Job negative-tests com 6 cenarios x 3 SOs + mutation-test (vazio + achatada); run 45605819626 success | .github/workflows/ci.yml |
-| B05 | Auditoria independente automática | Codex | ❌ Não implementado | Subagente auditor com critérios verificáveis |
+| B05 | Auditoria independente automática | Codex | 🔒 Bloqueado por limitação da plataforma (T14 payload vazio NEW_TASK) | Subagente auditor com critérios verificáveis |
 | B06 | Bloqueio de merge/conclusão com falhas | GitHub/Codex | ⚠️ Branch protection possível; update_goal sem gate nativo | Documentar limitação |
 
 ## Limitações da Plataforma (documentadas, não inventar workarounds)
