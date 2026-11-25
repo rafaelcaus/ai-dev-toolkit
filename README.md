@@ -1,3 +1,7 @@
+## AVISO — VERSAO EXPERIMENTAL
+
+**Nao execute o instalador ate a conclusao da auditoria final.** Esta versao (1.7.1-experimental) corrige falhas identificadas na revisao anterior. O aviso sera removido apos validacao completa.
+
 # AI Dev Toolkit
 
 Kit de produtividade para desenvolvimento assistido por IA, projetado para Codex Desktop/CLI e Claude Code.
@@ -115,3 +119,23 @@ O instalador oferece um menu com seis opcoes:
 
 ### Desinstalar
 `pwsh ./install.ps1 -Uninstall` — remove apenas os componentes gerenciados pelo kit, com backup previo.
+## Formato de agentes por plataforma
+
+- Codex Desktop/CLI: TOML em ~/.agents/ (16 perfis).
+- Claude Code: Markdown com frontmatter YAML em ~/.claude/agents/ (16 perfis equivalentes).
+- Lovable: adaptacao ao mecanismo nativo de subagentes (nao automatizado).
+
+## Transparencia e concorrencia
+
+As skills agentes, executar, meta, retomar e auditar incluem instrucoes para:
+
+- Preservar titulos Markdown ###, emojis e negrito nos registros operacionais.
+- Manter historico operacional persistente por tarefa, sem credenciais.
+- Reforcar instrucoes apos compactacao e retomada.
+- Gerenciar concorrencia de subagentes de forma adaptativa, registrando eventos reais.
+- Distinguir tentativas rejeitadas de execucoes bem-sucedidas.
+
+## Limitacao conhecida (documentada)
+
+- conversationDetailMode = STEPS_COMMANDS existe em ~/.codex/config.toml sob [desktop], mas nao ha configuracao nativa documentada nesta versao do Codex Desktop que mantenha blocos intermediarios expandidos apos a conclusao da resposta. Consulte os issues openai/codex #22334, #34418 e #23221 para acompanhar o status.
+- Integracao Lovable via MCP e orientada por instrucao; o instalador nao automatiza OAuth nem selecao de workspace.

@@ -1,13 +1,35 @@
 ---
 name: react
-description: "Ponto de entrada ''react'' do workflow de Rafael. Carregar e aplicar as skills: vercel-react-best-practices. Alias de nome curto; os identificadores reais permanecem inalterados."
+description: Otimizacoes de React e Next.js baseadas em engenharia da Vercel.
 ---
 
-# Alias ''react''
+## Objetivo
+Aplicar boas praticas de performance e manutenibilidade em aplicacoes React e Next.js.
 
-Este alias nao duplica conteudo. Ao ser acionado, carregue e siga integralmente as skills reais listadas abaixo (uma autoridade por etapa; sem coordenadores concorrentes):
+## Quando ativar
+- Desenvolvimento de componentes React
+- Otimizacao de renderizacao e bundle
+- Configurar Next.js (SSR, SSG, ISR)
+- Revisao de codigo React/Next.js
 
-- vercel-react-best-practices
+## Procedimento
+1. Use composicao de componentes sobre heranca
+2. Memoize valores caros com useMemo/useCallback
+3. Evite re-renders desnecessarios (React.memo, keys estaveis)
+4. Prefira Server Components quando possivel (Next.js)
+5. Otimize imagens (next/image) e fontes (next/font)
+6. Code-split rotas e componentes pesados
+7. Minimize JavaScript no cliente
+8. Use Suspense para loading states
 
-Regras do workflow global em AGENTS.md (bloco WORKFLOW-GLOBAL-RAFAEL) continuam aplicaveis.
+## Criterios de conclusao
+- Componentes otimizados para renderizacao
+- Bundle size dentro de limites aceitaveis
+- Core Web Vitals atendidos
+- Sem anti-padroes de React
 
+## Erros comuns
+- useEffect como substituto de derivacao de estado
+- Keys instaveis em listas
+- Importar bibliotecas inteiras sem tree-shaking
+- Ignorar hydration mismatches

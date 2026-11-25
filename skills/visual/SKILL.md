@@ -1,13 +1,34 @@
 ---
 name: visual
-description: "Ponto de entrada ''visual'' do workflow de Rafael. Carregar e aplicar as skills: web-design-guidelines. Alias de nome curto; os identificadores reais permanecem inalterados."
+description: Conformidade com diretrizes de interface web e acessibilidade.
 ---
 
-# Alias ''visual''
+## Objetivo
+Garantir que interfaces web sigam diretrizes de design, acessibilidade e usabilidade.
 
-Este alias nao duplica conteudo. Ao ser acionado, carregue e siga integralmente as skills reais listadas abaixo (uma autoridade por etapa; sem coordenadores concorrentes):
+## Quando ativar
+- Desenvolvimento de UI/web
+- Revisao de interface
+- Implementacao de componentes visuais
+- Validacao de acessibilidade
 
-- web-design-guidelines
+## Procedimento
+1. Verifique contraste de cores e legibilidade
+2. Valide navegacao por teclado e leitores de tela
+3. Cheque responsividade (mobile/tablet/desktop)
+4. Verifique estados interativos (hover, focus, active, disabled)
+5. Valide semantic HTML e ARIA quando necessario
+6. Teste em diferentes navegadores/tamanhos
+7. Verifique consistencia visual com design system
 
-Regras do workflow global em AGENTS.md (bloco WORKFLOW-GLOBAL-RAFAEL) continuam aplicaveis.
+## Criterios de conclusao
+- Interface acessivel (WCAG AA minimo)
+- Responsiva e consistente
+- Estados interativos definidos
+- HTML semantico adequado
 
+## Erros comuns
+- Ignorar acessibilidade
+- So testar em desktop
+- Focar so em aparencia, ignorando usabilidade
+- Nao verificar estados de focus/hover

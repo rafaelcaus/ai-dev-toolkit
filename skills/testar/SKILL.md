@@ -1,13 +1,33 @@
 ---
 name: testar
-description: "Ponto de entrada ''testar'' do workflow de Rafael. Carregar e aplicar as skills: superpowers-verification-before-completion. Alias de nome curto; os identificadores reais permanecem inalterados."
+description: Verificacao baseada em evidencias antes de declarar conclusao.
 ---
 
-# Alias ''testar''
+## Objetivo
+Validar que mudancas funcionam corretamente atraves de testes automatizados e verificacao funcional, com evidencia concreta.
 
-Este alias nao duplica conteudo. Ao ser acionado, carregue e siga integralmente as skills reais listadas abaixo (uma autoridade por etapa; sem coordenadores concorrentes):
+## Quando ativar
+- Apos implementacao de feature ou correcao
+- Antes de declarar tarefa concluida
+- Quando solicitado explicitamente
+- Como parte do fluxo de verificacao
 
-- superpowers-verification-before-completion
+## Procedimento
+1. Identifique cenarios de teste relevantes
+2. Escreva/executa testes automatizados
+3. Verifique comportamento real (nao so build/lint)
+4. Valide casos limite e erros
+5. Documente evidencia dos testes
+6. Distinga: implementado, testado, validado
 
-Regras do workflow global em AGENTS.md (bloco WORKFLOW-GLOBAL-RAFAEL) continuam aplicaveis.
+## Criterios de conclusao
+- Testes automatizados passando
+- Comportamento verificado funcionalmente
+- Evidencia documentada
+- Casos limite cobertos
 
+## Erros comuns
+- Declarar conclusao sem teste real
+- Testar so caminho feliz
+- Build/lint como substituto de teste funcional
+- Nao verificar comportamento em ambiente real

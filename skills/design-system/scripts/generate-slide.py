@@ -669,11 +669,11 @@ def main():
             {
                 'type': 'title',
                 'badge': 'Investor Deck 2024',
-                'title': 'ClaudeKit Marketing',
+                'title': 'ai-dev-toolkit Marketing',
                 'subtitle': 'Your AI marketing team. Always on.',
                 'cta': 'Join Waitlist',
                 'secondary_cta': 'See Demo',
-                'company': 'ClaudeKit',
+                'company': 'ai-dev-toolkit',
                 'date': 'December 2024'
             },
             {
@@ -685,7 +685,7 @@ def main():
                 'pain_2_desc': '15+ tools that don\'t talk to each other',
                 'pain_3_title': 'No Time to Think',
                 'pain_3_desc': 'Strategy suffers when execution consumes all hours',
-                'company': 'ClaudeKit',
+                'company': 'ai-dev-toolkit',
                 'page': '2'
             },
             {
@@ -697,7 +697,7 @@ def main():
                 'feature_2_desc': 'Multi-channel orchestration with one command',
                 'feature_3_title': 'Analytics & Insights',
                 'feature_3_desc': 'Real-time optimization without the spreadsheets',
-                'company': 'ClaudeKit',
+                'company': 'ai-dev-toolkit',
                 'page': '3'
             },
             {
@@ -709,7 +709,7 @@ def main():
                     {'value': '4.9', 'label': 'NPS Score'},
                     {'value': '50hrs', 'label': 'Saved/Week'}
                 ],
-                'company': 'ClaudeKit',
+                'company': 'ai-dev-toolkit',
                 'page': '4'
             },
             {
@@ -723,15 +723,15 @@ def main():
                     {'label': 'Nov', 'value': 70, 'display': '$28K'},
                     {'label': 'Dec', 'value': 100, 'display': '$45K'}
                 ],
-                'company': 'ClaudeKit',
+                'company': 'ai-dev-toolkit',
                 'page': '5'
             },
             {
                 'type': 'testimonial',
-                'quote': 'ClaudeKit replaced 3 tools and 2 contractors. Our content output tripled while costs dropped 60%.',
+                'quote': 'ai-dev-toolkit replaced 3 tools and 2 contractors. Our content output tripled while costs dropped 60%.',
                 'author': 'Sarah Chen',
                 'role': 'Head of Marketing, TechStartup',
-                'company': 'ClaudeKit',
+                'company': 'ai-dev-toolkit',
                 'page': '6'
             },
             {
@@ -739,12 +739,12 @@ def main():
                 'headline': 'Ship campaigns while you sleep',
                 'subheadline': 'Early access available. Limited spots.',
                 'cta': 'Join the Waitlist',
-                'contact': 'hello@claudekit.ai',
-                'website': 'claudekit.ai'
+                'contact': 'hello@ai-dev-toolkit.ai',
+                'website': 'ai-dev-toolkit.ai'
             }
         ]
 
-        html = generate_deck(demo_slides, "ClaudeKit Marketing - Pitch Deck")
+        html = generate_deck(demo_slides, "ai-dev-toolkit Marketing - Pitch Deck")
 
         OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
         output_path = OUTPUT_DIR / f"demo-pitch-{datetime.now().strftime('%y%m%d')}.html"

@@ -1,6 +1,6 @@
 ---
 name: meta
-description: "Criar, ativar, acompanhar e concluir metas nativas profissionais (create_goal/update_goal/get_goal) automaticamente quando Rafael aprovar a execução integral de um plano complexo. Use ao aprovar plano, retomar meta, verificar status de meta ou concluir meta com evidências. Não usar para ideias, pedidos de planejamento ou aprovações visuais."
+description: "Criar, ativar, acompanhar e concluir metas nativas profissionais (create_goal/update_goal/get_goal) automaticamente quando o usuário aprovar a execução integral de um plano complexo. Use ao aprovar plano, retomar meta, verificar status de meta ou concluir meta com evidências. Não usar para ideias, pedidos de planejamento ou aprovações visuais."
 ---
 
 # Meta — contrato de execução nativa
@@ -9,7 +9,7 @@ description: "Criar, ativar, acompanhar e concluir metas nativas profissionais (
 Transformar a aprovação de execução de um plano complexo em uma **meta nativa ativa** quando as ferramentas reais estiverem disponíveis e autorizadas. Escrever sobre uma meta não equivale a ativá-la. Se indisponíveis, manter um marco operacional verificável, declarar a limitação e não alegar ativação nativa.
 
 ## Ativação automática
-Quando Rafael aprovar a execução integral de um plano (ex.: "Aprovo o plano. Pode executar."):
+Quando o usuário aprovar a execução integral de um plano (ex.: "Aprovo o plano. Pode executar."):
 1. Verificar se já existe meta correspondente (get_goal). Se existir e for do mesmo plano, reutilizar; não duplicar nem substituir metas de outros trabalhos.
 2. Se não existir, criar com create_goal contendo: objetivo, referência ao plano aprovado (arquivo persistente com caminho e versão), obrigações de execução e critérios de conclusão.
 3. Estrutura da meta (referência flexível 800–1500 caracteres, limite nativo 4000):
@@ -19,7 +19,7 @@ Quando Rafael aprovar a execução integral de um plano (ex.: "Aprovo o plano. P
    - **AGENTES:** especialistas responsáveis pelas tarefas.
    - **HOOKS:** mecanismos de continuidade e controle.
 4. Confirmar que a meta foi criada e está ativa (get_goal). Não presuma sucesso sem retorno da ferramenta.
-5. Não configurar token_budget sem solicitação explícita de Rafael.
+5. Não configurar token_budget sem solicitação explícita do usuário.
 
 ## Não é aprovação de execução
 - Aprovação de ideia, pedido de planejamento ou aprovação exclusivamente visual NÃO autoriza criação de meta nem implementação.
@@ -57,3 +57,10 @@ Não marcar como concluída apenas porque o código foi escrito, o build passou 
 - executar: a meta orienta a execução por etapas verificáveis.
 - auditar: auditoria do plano e global são requisitos de conclusão da meta.
 - retomar: reconcilia meta nativa com STATE.json/HANDOFF ao retomar.
+
+
+## Integração com Transparência
+
+- Ao criar/atualizar metas, registre eventos com cabeçalhos ### 🎯 META ATIVADA / ✅ META CONCLUÍDA.
+- Inclua critérios de conclusão verificáveis no registro operacional persistente.
+- Após compactação, recupere estado da meta e reforce instruções de transparência.
