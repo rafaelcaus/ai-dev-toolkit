@@ -1,0 +1,6 @@
+interface:
+  display_name: "Meta"
+  short_description: "Cria e acompanha metas nativas ao aprovar planos complexos."
+  default_prompt: "Use meta para criar/verificar a meta nativa deste plano."
+policy:
+  allow_implicit_invocation: true

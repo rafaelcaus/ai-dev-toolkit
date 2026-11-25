@@ -1,0 +1,7 @@
+interface:
+  display_name: "Agentes Paralelos"
+  short_description: "Distribua subtarefas independentes entre agentes com fronteiras claras."
+  default_prompt: "Use agentes conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+

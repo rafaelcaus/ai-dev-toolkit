@@ -1,0 +1,7 @@
+interface:
+  display_name: "Auditoria Final"
+  short_description: "Audite a entrega atual versus o que realmente funciona."
+  default_prompt: "Use auditar conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+

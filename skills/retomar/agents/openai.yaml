@@ -1,0 +1,7 @@
+interface:
+  display_name: "Retomar Tarefa"
+  short_description: "Retome o trabalho salvo em ANDAMENTO.md / STATE.json."
+  default_prompt: "Use retomar conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+

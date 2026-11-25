@@ -1,0 +1,7 @@
+interface:
+  display_name: "Execução Objetiva"
+  short_description: "Execute ou retome a tarefa atual com conclusão verificável."
+  default_prompt: "Use executar conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+

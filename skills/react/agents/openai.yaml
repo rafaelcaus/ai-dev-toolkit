@@ -1,0 +1,7 @@
+interface:
+  display_name: "React Best Practices"
+  short_description: "Aplique otimizações e padrões React/Next na implementação."
+  default_prompt: "Use react conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+

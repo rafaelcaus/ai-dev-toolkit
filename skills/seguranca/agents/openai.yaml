@@ -1,0 +1,7 @@
+interface:
+  display_name: "Segurança (Sharp Edges)"
+  short_description: "Revise interfaces/configurações propensas a uso inseguro."
+  default_prompt: "Use seguranca conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+

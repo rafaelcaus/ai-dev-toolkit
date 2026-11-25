@@ -1,0 +1,7 @@
+interface:
+  display_name: "Corrigir (Debug Sistemático)"
+  short_description: "Diagnostique a causa-raiz e corrija com evidência."
+  default_prompt: "Use corrigir conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+

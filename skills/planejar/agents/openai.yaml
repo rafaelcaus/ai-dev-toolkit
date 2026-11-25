@@ -1,0 +1,7 @@
+interface:
+  display_name: "Plano Inicial"
+  short_description: "Planeje a ideia mapeando impactos antes de implementar."
+  default_prompt: "Use planejar conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+

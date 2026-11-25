@@ -1,0 +1,7 @@
+interface:
+  display_name: "Design de UI (Web)"
+  short_description: "Aplique as diretrizes de design de interface web."
+  default_prompt: "Use visual conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+

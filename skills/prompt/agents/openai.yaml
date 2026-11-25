@@ -1,0 +1,7 @@
+interface:
+  display_name: "Gerador de Prompts"
+  short_description: "Transforme o objetivo em um prompt claro e testável."
+  default_prompt: "Use prompt conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+

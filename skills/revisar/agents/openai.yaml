@@ -1,0 +1,7 @@
+interface:
+  display_name: "Revisão de Código"
+  short_description: "Revise a implementação quanto a correção, clareza e segurança."
+  default_prompt: "Use revisar conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+

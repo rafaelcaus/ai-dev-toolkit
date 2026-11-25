@@ -1,0 +1,7 @@
+interface:
+  display_name: "Testar (Verificação antes de Concluir)"
+  short_description: "Verifique o comportamento real antes de declarar concluído."
+  default_prompt: "Use testar conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+

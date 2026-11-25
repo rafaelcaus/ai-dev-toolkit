@@ -1,0 +1,7 @@
+interface:
+  display_name: "Banco (Supabase/Postgres)"
+  short_description: "Aplique práticas de Supabase/Postgres na tarefa atual."
+  default_prompt: "Use banco conforme as regras da skill."
+policy:
+  allow_implicit_invocation: true
+
