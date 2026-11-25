@@ -51,6 +51,10 @@
 - rg paths C:/Users/RAFAEL: 0 hits
 - rg api_key/secret/password/PRIVATE: 0 hits em texto real
 
+### Teste Linux fisico (WSL Ubuntu)
+
+Ciclo real em /tmp/aidt-home: instalar = 17 skills; backup contem 17; desinstalar = 0; restaurar = 17 skills. Agentes TOML em ~/.agents, OWNERSHIP.json criado e removido corretamente. Exit codes 0 em todas as etapas.
+
 ### Confirmacao de issue rastreada
 
 Issue #23221 (openai/codex): bug aberto, titulo "Codex responses are fully nested within collapsed <Worked for {N}s> sections", labels bug + app, confirmado via GitHub API em 2026-11-25. Nenhuma configuracao nativa disponivel para expandir blocos; limitacao documentada e valida.

@@ -12,7 +12,7 @@ Kit de produtividade para desenvolvimento assistido por IA para Codex Desktop/CL
 
 Conjunto de **17 skills** e **16 perfis de agente** (formato TOML para Codex, Markdown YAML para Claude Code) que automatizam planejamento, execucao, correcao, teste, auditoria e revisao de codigo.
 
-## As 16 skills
+## As 17 skills
 
 | Skill | Funcao |
 |-------|--------|
@@ -54,7 +54,7 @@ Menu com seis opcoes: Codex, Claude Code, Lovable (MCP), atualizacoes, restaurac
 - Desinstalacao/remove apenas componentes gerenciados; nunca toca em terceiros.
 - Restauracao retorna arquivos aos caminhos originais.
 - Atualizador apenas INFORMA; nao executa codigo remoto automaticamente.
-- Lovable: apenas instrucoes sobre o MCP oficial; sem automacao.
+- Lovable: ciclo unitario (CREATE/LIST/GET/UPDATE/DELETE) + instalacao em massa (17/17 skills) validados via MCP mcp.lovable.dev em workspace de teste.
 - Ciclo completo (instalar → reinstalar → desinstalar → restaurar) validado em Windows.
 
 ### Limitacoes conhecidas
@@ -63,7 +63,7 @@ Menu com seis opcoes: Codex, Claude Code, Lovable (MCP), atualizacoes, restaurac
 - Integracao Lovable via MCP validada em ciclo unitario e instalacao em massa (17/17 skills) no workspace LOVABLE 0.
 - Subagentes reais do Codex podem apresentar falha de transporte de payload em algumas sessoes; ver skill `agentes` para protocolo de diagnostico.
 - Blocos intermediarios do Codex Desktop podem recolher apos conclusao; nenhuma configuracao nativa encontrada para manter sempre expandido (`conversationDetailMode = STEPS_COMMANDS` nao controla isso).
-- install.sh testado sintaticamente (bash -n); execucao fisica em Linux/macOS pendente.
+- install.sh executado em WSL Ubuntu (Linux real): ciclo instalar 17 skills, desinstalar 0 skills, restaurar 17 skills. Pendente macOS fisico (CI cobre sintaxe).
 
 ## Seguranca e privacidade
 
