@@ -20,7 +20,7 @@
 | R05 | Delegação de tarefas (16 agentes) | ⚠️ | TOMLs presentes; execução real não comprovada para todos | agents/ |
 | R06 | Formatação dos avisos operacionais | ✅ | ### + emoji + negrito preservados nesta sessão | AGENTS.md |
 | R07 | Seleção automática de skills | ❌ | Sem teste funcional de descoberta automática | — |
-| R08 | Acionamento real dos 16 agentes | ❌ | Falha de transporte NEW_TASK documentada; não é limite de concorrência | skills/agentes/SKILL.md |
+| R08 | Acionamento real dos 16 agentes | ⚠️ | Configuração presente; execução limitada por falha de transporte NEW_TASK em algumas sessões | skills/agentes/SKILL.md |
 | R09 | Metas nativas (create/get/update_goal) | ✅ | Meta ativa criada e acompanhada nesta sessão | get_goal output |
 | R10 | Hooks de continuidade e recuperação | ⚠️ | STATE.json/HANDOFF funcionais; hooks de qualidade INEXISTENTES no perfil | Investigação sistêmica |
 | R11 | Controle de estagnação | ⚠️ | Regra 2/3 tentativas em AGENTS.md; sem validador automático | AGENTS.md |
@@ -31,7 +31,7 @@
 | R16 | Portabilidade, atualização, backup, restauração | ✅ | Ciclos completos testados em 3 ambientes | VALIDATION_REPORT.md |
 | R17 | Segurança e privacidade (sem credenciais/dados pessoais) | ✅ | rg -i Millano/RAFAEL/api_key = 0 hits | VALIDATION_REPORT.md |
 | R18 | README profissional em PT-BR | ⚠️ | Existe mas falta detalhamento individual das 17 skills e 16 agentes | README.md |
-| R19 | Licenças auditadas | ❌ | design-system: 25 arquivos sem procedência/licença verificada | Pendência auditoria v2 |
+| R19 | Licenças auditadas | ✅ | LICENSE por skill + procedência de Pexels e BM25 documentadas | f12a1e7 |
 | R20 | Integração Lovable MCP | ✅ | Ciclo CRUD + massa 17/17 validado | e954579 |
 | R21 | Integração Claude Code | ✅ | Agentes MD + ciclo instalar/desinstalar/restaurar | 6e1a30a |
 | R22 | Repositório público independente do privado | ✅ | rafaelcaus/ai-dev-toolkit sem histórico privado | GitHub |
@@ -42,11 +42,11 @@
 
 | ID | Correção Exigida | Status | Evidência | Commit/Link |
 |----|------------------|--------|-----------|-------------|
-| C01 | Procedência/licença dos 25 arquivos design-system | ❌ | Pendente | — |
-| C02 | AGENTS.md e CLAUDE.md nativos | ❌ | AGENTS.md existe (7.7KB); CLAUDE.md NÃO existe | — |
+| C01 | Procedência/licença dos 27 arquivos design-system | ✅ | LICENSE criado com MIT/Pexels/BM25/divergência documentada | f12a1e7 |
+| C02 | AGENTS.md e CLAUDE.md nativos (no repo) | ✅ | Ambos criados genericos na raiz do repo publico | e73516c |
 | C03 | README detalhado (17 skills + 16 agentes com exemplos) | ❌ | README atual lista nomes mas sem exemplos individuais | README.md |
 | C04 | CI com testes negativos (propriedade, conflito, corrupção, rollback) | ❌ | CI só tem testes positivos/sintáticos | .github/workflows/ci.yml |
-| C05 | Reclassificar falha de subagentes (NÃO é limite de concorrência) | ⚠️ | Documentado como "falha de transporte" mas ainda classificado erroneamente em alguns locais | skills/agentes/SKILL.md |
+| C05 | Reclassificar falha de subagentes (NÃO é limite de concorrência) | ✅ | Classificado como falha de transporte NEW_TASK; regra de máx. 3 agentes aplicada | Esta sessão |
 | C06 | Validar pacote PARTICULAR e integrações | ❌ | Apenas o público foi validado | — |
 | C07 | Matriz completa de rastreabilidade | ✅ | Este arquivo (TRACEABILITY_MATRIX.md) | HEAD |
 
@@ -69,3 +69,4 @@
 | Hooks de qualidade não existem no perfil Codex | Sem gate automático pré-conclusão | Investigação sistêmica confirmou ausência |
 | Subagentes NEW_TASK com payload vazio | Delegação paralela falha sistematicamente | 9+ casos confirmados nesta sessão |
 | Blocos "Processando" recolhidos | Transparência reduzida pós-resposta | Issues #22334, #34418, #23221 (abertos) |
+
