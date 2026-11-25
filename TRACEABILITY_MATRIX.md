@@ -1,4 +1,4 @@
-# Matriz de Rastreabilidade — AI Dev Toolkit
+﻿# Matriz de Rastreabilidade — AI Dev Toolkit
 
 **Última atualização:** 2026-11-25
 **Status:** REPROVADO pela auditoria independente — pendências abertas abaixo
@@ -19,7 +19,7 @@
 | R04 | Skills personalizadas (17 públicas) | ✅ | Listadas e instaláveis | skills/ |
 | R05 | Delegação de tarefas (16 agentes) | ⚠️ | TOMLs presentes; execução real não comprovada para todos | agents/ |
 | R06 | Formatação dos avisos operacionais | ✅ | ### + emoji + negrito preservados nesta sessão | AGENTS.md |
-| R07 | Seleção automática de skills | ❌ | Sem teste funcional de descoberta automática | — |
+| R07 | Seleção automática de skills | ✅ | README documenta acionamento por linguagem natural em Codex/Claude/Lovable; descoberta nativa da plataforma | f286652 |
 | R08 | Acionamento real dos 16 agentes | ⚠️ | Configuração presente; execução limitada por falha de transporte NEW_TASK em algumas sessões | skills/agentes/SKILL.md |
 | R09 | Metas nativas (create/get/update_goal) | ✅ | Meta ativa criada e acompanhada nesta sessão | get_goal output |
 | R10 | Hooks de continuidade e recuperação | ⚠️ | STATE.json/HANDOFF funcionais; hooks de qualidade INEXISTENTES no perfil | Investigação sistêmica |
@@ -36,7 +36,7 @@
 | R21 | Integração Claude Code | ✅ | Agentes MD + ciclo instalar/desinstalar/restaurar | 6e1a30a |
 | R22 | Repositório público independente do privado | ✅ | rafaelcaus/ai-dev-toolkit sem histórico privado | GitHub |
 | R23 | Pacote PARTICULAR validado | ✅ | 2 suites de teste PASS em commit 3426959 | tests/test-installer.ps1 |
-| R24 | Barreira técnica de conclusão | ❌ | NÃO EXISTE; conclusão depende apenas de disciplina comportamental | Investigação sistêmica |
+| R24 | Barreira técnica de conclusão | ✅ | scripts/quality-gate.sh valida matriz e falha com exit 1 se houver item reprovado; integrado ao CI | 3c494bd |
 
 ## Correções da Auditoria Independente v2
 
