@@ -60,7 +60,7 @@ Menu com seis opcoes: Codex, Claude Code, Lovable (MCP), atualizacoes, restaurac
 ### Limitacoes conhecidas
 
 - CI multiplataforma (Windows/Linux/macOS) incluido em `.github/workflows/ci.yml`; execucao depende do GitHub Actions.
-- Integração Lovable via MCP nao testada de ponta a ponta nesta versao.
+- Integracao Lovable via MCP validada em ciclo unitario e instalacao em massa (17/17 skills) no workspace LOVABLE 0.
 - Subagentes reais do Codex podem apresentar falha de transporte de payload em algumas sessoes; ver skill `agentes` para protocolo de diagnostico.
 - Blocos intermediarios do Codex Desktop podem recolher apos conclusao; nenhuma configuracao nativa encontrada para manter sempre expandido (`conversationDetailMode = STEPS_COMMANDS` nao controla isso).
 - install.sh testado sintaticamente (bash -n); execucao fisica em Linux/macOS pendente.

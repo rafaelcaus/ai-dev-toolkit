@@ -30,7 +30,7 @@
 | Concorrencia adaptativa | INTEGRADO | Instrucoes em skills/agentes; protocolo de 2/3 tentativas; eventos reais |
 | Integracao global | INTEGRADO | 5 skills atualizadas com transparencia |
 | Claude Code | INTEGRADO | agents/claude/*.md gerados a partir dos TOMLs |
-| Lovable | VALIDADO | Ciclo MCP real em workspace LOVABLE 0: CREATE f550f66, LIST, GET, UPDATE, DELETE 1795569720022030. Metodos lovable_create/update/delete/list/get_workspace_skill via mcp.lovable.dev. Originais: | install.ps1 -Target lovable / install.sh --target lovable exibem fluxo MCP oficial |
+| Lovable | VALIDADO | Ciclo unitario (CREATE/READ/UPDATE/DELETE) + instalacao em massa 17/17 (CREATE x17, LIST=17, DELETE x17, LIST=0) validados em workspace LOVABLE 0 via mcp.lovable.dev. Workspace restaurado ao estado original. |
 | AI Dev Memory | REGISTRADO | AI_DEV_MEMORY_PLAN.md como Prioridade 2 |
 
 ## Testes realizados
@@ -55,7 +55,7 @@
 
 1. Validacao independente do ChatGPT antes de iniciar AI Dev Memory (Prioridade 2).
 2. Teste de transparencia em sessao real descartavel pos-compactacao (blocos recolhidos = comportamento nativo do Codex Desktop; issues #22334, #34418, #23221 abertos; sem config nativa; documentado).
-3. Instalacao em massa das 17 skills publicas em workspace Lovable de producao do usuario final (ciclo unitario MCP ja validado).
+3. (RESOLVIDO) Instalacao em massa das 17 skills: ciclo CREATE x17 + LIST=17 + DELETE x17 + LIST=0 executado com sucesso em workspace LOVABLE 0 via MCP. Nenhuma pendencia tecnica restante para instalacao em producao.
 
 ## Links finais
 
