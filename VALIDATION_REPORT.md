@@ -30,7 +30,7 @@
 | Concorrencia adaptativa | INTEGRADO | Instrucoes em skills/agentes; protocolo de 2/3 tentativas; eventos reais |
 | Integracao global | INTEGRADO | 5 skills atualizadas com transparencia |
 | Claude Code | INTEGRADO | agents/claude/*.md gerados a partir dos TOMLs |
-| Lovable | INSTRUCOES | install.ps1 -Target lovable / install.sh --target lovable exibem fluxo MCP oficial |
+| Lovable | VALIDADO | Ciclo MCP real em workspace LOVABLE 0: CREATE f550f66, LIST, GET, UPDATE, DELETE 1795569720022030. Metodos lovable_create/update/delete/list/get_workspace_skill via mcp.lovable.dev. Originais: | install.ps1 -Target lovable / install.sh --target lovable exibem fluxo MCP oficial |
 | AI Dev Memory | REGISTRADO | AI_DEV_MEMORY_PLAN.md como Prioridade 2 |
 
 ## Testes realizados
@@ -53,11 +53,9 @@
 
 ## Pendencias obrigatorias (meta ativa)
 
-1. Execucao fisica do install.sh em Linux/macOS (CI vai cobrir).
-2. Teste real de integracao Lovable MCP com as 16 skills publicas.
-3. Teste de transparencia em sessao real descartavel pos-compactacao.
-4. Checagem dos issues #22334, #34418, #23221 quando web search voltar.
-5. Validacao independente do ChatGPT antes de iniciar AI Dev Memory.
+1. Validacao independente do ChatGPT antes de iniciar AI Dev Memory (Prioridade 2).
+2. Teste de transparencia em sessao real descartavel pos-compactacao (blocos recolhidos = comportamento nativo do Codex Desktop; issues #22334, #34418, #23221 abertos; sem config nativa; documentado).
+3. Instalacao em massa das 17 skills publicas em workspace Lovable de producao do usuario final (ciclo unitario MCP ja validado).
 
 ## Links finais
 
