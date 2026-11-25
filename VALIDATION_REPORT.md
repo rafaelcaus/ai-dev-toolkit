@@ -51,6 +51,10 @@
 - rg paths C:/Users/RAFAEL: 0 hits
 - rg api_key/secret/password/PRIVATE: 0 hits em texto real
 
+### Confirmacao de issue rastreada
+
+Issue #23221 (openai/codex): bug aberto, titulo "Codex responses are fully nested within collapsed <Worked for {N}s> sections", labels bug + app, confirmado via GitHub API em 2026-11-25. Nenhuma configuracao nativa disponivel para expandir blocos; limitacao documentada e valida.
+
 ## Pendencias obrigatorias (meta ativa)
 
 1. Validacao independente do ChatGPT antes de iniciar AI Dev Memory (Prioridade 2).
