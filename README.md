@@ -156,3 +156,10 @@ pwsh ./install.ps1 -Uninstall [-Target codex|claude] [-Apply]
 
 Skills originais deste repositorio. Consulte LICENSE em cada skill de terceiros redistribuida.
 
+
+
+## Compatibilidade e Escopo
+
+**Escopo obrigatorio:** Windows (Codex Desktop/CLI, Claude Code, Lovable, ChatGPT, Dots).
+**Escopo experimental (sem garantia):** Linux e macOS. Componentes presentes mas nao obrigatorios para conclusao da meta.
+**Nota:** Reducao de escopo por decisao expressa do usuario em 2026-11-25. Testes Linux/macOS no CI continuam executando, mas nao sao criterios de bloqueio.

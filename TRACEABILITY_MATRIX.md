@@ -1,7 +1,7 @@
 ﻿# Matriz de Rastreabilidade — AI Dev Toolkit
 
 **Última atualização:** 2026-11-25
-**Status:** EM VALIDACAO - pendencias criticas corrigidas (PR #1 merged 5f13fd8, CI 10/10 verde), aguardando aprovacao externa
+**Status:** EM VALIDACAO - pendencias criticas corrigidas (PR #1 e #2 merged), escopo reduzido para Windows por decisao expressa do usuario (Linux/macOS experimentais, nao obrigatorios)
 
 ## Legenda
 - ✅ Evidência verificável existe e está vinculada
@@ -58,10 +58,10 @@
 | ID | Mecanismo | Plataforma | Status | Notas |
 |----|-----------|------------|--------|-------|
 | B01 | Matriz persistente de requisitos | Codex/Claude/Lovable | 🔄 Em progresso | Este arquivo |
-| B02 | Validador de cobertura pré-conclusão | Codex (update_goal) | 🔒 Bloqueado por limitação da plataforma (update_goal sem gate nativo) | Requer hook ou wrapper |
-| B03 | Invalidação seletiva de evidências | Todas | 🔒 Bloqueado por limitação da plataforma | Quando código muda, evidência antiga é invalidada |
+| B02 | Validador de cobertura pré-conclusão | Codex (update_goal) | ⚠️ Parcial - alternativa externa em planejamento (avaliador manual via skill auditar + matriz) | Requer hook ou wrapper |
+| B03 | Invalidação seletiva de evidências | Todas | ⚠️ Parcial - evidencias vinculadas a commit/SHA na matriz; validador pode comparar SHA atual vs evidencia | Quando código muda, evidência antiga é invalidada |
 | B04 | Testes negativos obrigatórios no CI | GitHub Actions | ✅ Implementado | Job negative-tests com 6 cenarios x 3 SOs + mutation-test (vazio + achatada); run 45605819626 success | .github/workflows/ci.yml |
-| B05 | Auditoria independente automática | Codex | 🔒 Bloqueado por limitação da plataforma (T14 payload vazio NEW_TASK) | Subagente auditor com critérios verificáveis |
+| B05 | Auditoria independente automática | Codex | ⚠️ Parcial - auditoria externa manual em uso (ChatGPT/ACESSOR); subagentes com payload vazio registrado como T14 | Subagente auditor com critérios verificáveis |
 | B06 | Bloqueio de merge/conclusão com falhas | GitHub/Codex | ⚠️ Branch protection possível; update_goal sem gate nativo | Documentar limitação |
 
 ## Limitações da Plataforma (documentadas, não inventar workarounds)
