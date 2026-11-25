@@ -199,10 +199,12 @@ jobs:
           rm -f "$BK/MANIFEST.json"
           # Remover skills para forçar restore
           rm -rf "$CODEX_HOME/skills"
-          # Restore deve falhar (ou completar sem MANIFEST, dependendo da implementação)
-          # O importante: não deve corromper além do que já está
-          ./install.sh --restore "$BK" --target codex --apply 2>/dev/null
-          echo "OK: restore de backup corrompido não travou o processo"
+          # Restore deve FALHAR (exit != 0) - instalador agora aborta com MANIFEST ausente
+          if ./install.sh --restore "$BK" --target codex --apply 2>/dev/null; then
+            echo "ERRO: restore aceitou backup corrompido"
+            exit 1
+          fi
+          echo "OK: restore de backup corrompido foi abortado corretamente"
 
       # 4. ROLLBACK: restauração retorna ao estado pré-instalação
       - name: Negative - rollback completo retorna ao estado pré-instalação
