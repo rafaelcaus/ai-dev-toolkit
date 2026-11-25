@@ -277,7 +277,7 @@ jobs:
         run: |
           set -e
           # Corromper matriz: trocar um status OK por ❌
-          python3 -c "import sys; f=open('TRACEABILITY_MATRIX.md',encoding='utf-8'); c=f.read(); f.close(); c=c.replace('| ✅ |','| ❌ |',1); g=open('TRACEABILITY_MATRIX.md','w',encoding='utf-8'); g.write(c); g.close()"
+          awk -F'|' 'BEGIN{done=0} /^[[:space:]]*\|[[:space:]]*R[0-9]+/ && !done && NF>=5 { \$4 = " X "; print; done=1; next } { print }' TRACEABILITY_MATRIX.md > TRACEABILITY_MATRIX.md.tmp && mv TRACEABILITY_MATRIX.md.tmp TRACEABILITY_MATRIX.md
           # O gate DEVE falhar (exit != 0)
           if bash scripts/quality-gate.sh TRACEABILITY_MATRIX.md > /dev/null 2>&1; then
             echo "MUTACAO FALHOU: gate aceitou matriz corrompida"
@@ -305,5 +305,8 @@ jobs:
             exit 1
           fi
           echo "MUTACAO OK: gate detectou matriz achatada e bloqueou"
+
+
+
 
 
