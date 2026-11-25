@@ -120,8 +120,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validar matriz de rastreabilidade (gate de conclusao)
         run: |
-          chmod +x ./scripts/quality-gate.sh
+          chmod +x ./scripts/quality-gate.sh ./scripts/consistency-audit.sh
           ./scripts/quality-gate.sh TRACEABILITY_MATRIX.md
+          ./scripts/consistency-audit.sh
   negative-tests:
     strategy:
       matrix:
