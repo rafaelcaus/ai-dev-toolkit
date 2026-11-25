@@ -55,6 +55,14 @@
 
 Ciclo real em /tmp/aidt-home: instalar = 17 skills; backup contem 17; desinstalar = 0; restaurar = 17 skills. Agentes TOML em ~/.agents, OWNERSHIP.json criado e removido corretamente. Exit codes 0 em todas as etapas.
 
+### Bug corrigido: uninstall/backup Claude Code (commit 6e1a30a)
+
+install.sh buscava agentes Claude em agents/*.md mas os perfis ficam em agents/claude/*.md; uninstall deixava 16 agentes orfaos. Corrigido para usar srcDir=agents/claude quando target=claude (tambem em backup_existing). Ciclos retestados no WSL Ubuntu: Codex 17+16 -> 0+0 -> 17+16; Claude 17+16 -> 0+0 -> 17+16. Sem regressao.
+
+### Ciclo Windows real (PowerShell 7)
+
+install.ps1 em perfil descartavel: instalar 17 skills -> desinstalar 0 -> restaurar 17 skills. Confirmado em adicao ao CI multiplataforma.
+
 ### Confirmacao de issue rastreada
 
 Issue #23221 (openai/codex): bug aberto, titulo "Codex responses are fully nested within collapsed <Worked for {N}s> sections", labels bug + app, confirmado via GitHub API em 2026-11-25. Nenhuma configuracao nativa disponivel para expandir blocos; limitacao documentada e valida.
