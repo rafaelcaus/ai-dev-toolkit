@@ -178,34 +178,84 @@ restore_backup(){
     echo "Use --apply para confirmar."
     return
   fi
-  [ -d "$bk" ] || { echo "Backup nao encontrado: $bk" >&2; exit 1; }
+  [ -d "$bk" ] || { echo "ERRO: Backup nao encontrado: $bk" >&2; exit 1; }
+  # Validar MANIFEST.json
+  if [ ! -e "$bk/MANIFEST.json" ]; then
+    echo "ERRO: MANIFEST.json ausente no backup. Restauracao abortada (backup possivelmente corrompido)." >&2
+    exit 1
+  fi
+  # Validar que MANIFEST nao esta corrompido (deve conter JSON valido basico)
+  if ! grep -q '"timestamp"' "$bk/MANIFEST.json" 2>/dev/null; then
+    echo "ERRO: MANIFEST.json corrompido ou invalido. Restauracao abortada." >&2
+    exit 1
+  fi
   # Derivar target do MANIFEST se t vazio
   if [ -z "$t" ] && [ -e "$bk/MANIFEST.json" ]; then
     t=$(grep -o '"target":"[^"]*"' "$bk/MANIFEST.json" | head -1 | cut -d'"' -f4)
   fi
   [ -z "$t" ] && t="codex"
   home=$(get_home "$t"); agentsHome=$(get_agents_home "$t")
-  # Restaurar skills do backup
+  # Restaurar skills do backup com hash comparison
   if [ -d "$bk/skills" ]; then
     for s in "$bk/skills"/*/; do
       [ -e "$s" ] || continue
       local name=$(basename "$s")
+      local dst="$home/skills/$name"
+      # Hash antes da restauracao
+      local hash_before=""
+      if [ -d "$dst" ]; then
+        hash_before=$(compute_hash "$dst")
+      fi
       mkdir -p "$home/skills"
-      rm -rf "$home/skills/$name"
-      cp -r "$s" "$home/skills/$name"
-      echo "  restaurado: skills/$name"
+      rm -rf "$dst"
+      cp -r "$s" "$dst"
+      # Hash apos a restauracao
+      local hash_after=$(compute_hash "$dst")
+      local hash_expected=$(compute_hash "$s")
+      if [ "$hash_after" != "$hash_expected" ]; then
+        echo "ERRO: hash mismatch ao restaurar skills/$name (esperado $hash_expected, obtido $hash_after)" >&2
+        exit 1
+      fi
+      if [ -n "$hash_before" ] && [ "$hash_before" = "$hash_after" ]; then
+        echo "  restaurado (idem): skills/$name"
+      else
+        echo "  restaurado: skills/$name"
+      fi
     done
   fi
-  # Restaurar arquivos soltos (agentes, OWNERSHIP)
+  # Restaurar arquivos soltos (agentes, OWNERSHIP) com hash comparison
   for f in "$bk"/*; do
     [ -f "$f" ] || continue
     local name=$(basename "$f")
     case "$name" in
-      MANIFEST.json|OWNERSHIP.json) cp "$f" "$home/$name"; echo "  restaurado: $name" ;;
-      *.toml|*.md) cp "$f" "$agentsHome/$name" 2>/dev/null || true; echo "  restaurado: $name" ;;
+      MANIFEST.json|OWNERSHIP.json)
+        local dst="$home/$name"
+        local hash_before=""
+        if [ -f "$dst" ]; then hash_before=$(sha256sum "$dst" | cut -d' ' -f1); fi
+        cp "$f" "$dst"
+        local hash_after=$(sha256sum "$dst" | cut -d' ' -f1)
+        local hash_expected=$(sha256sum "$f" | cut -d' ' -f1)
+        if [ "$hash_after" != "$hash_expected" ]; then
+          echo "ERRO: hash mismatch ao restaurar $name" >&2
+          exit 1
+        fi
+        echo "  restaurado: $name"
+        ;;
+      *.toml|*.md)
+        local hash_before=""
+        if [ -f "$agentsHome/$name" ]; then hash_before=$(sha256sum "$agentsHome/$name" | cut -d' ' -f1); fi
+        cp "$f" "$agentsHome/$name" 2>/dev/null || true
+        local hash_after=$(sha256sum "$agentsHome/$name" 2>/dev/null | cut -d' ' -f1)
+        local hash_expected=$(sha256sum "$f" | cut -d' ' -f1)
+        if [ "$hash_after" != "$hash_expected" ]; then
+          echo "ERRO: hash mismatch ao restaurar agente $name" >&2
+          exit 1
+        fi
+        echo "  restaurado: $name"
+        ;;
     esac
   done
-  echo "Restauracao concluida."
+  echo "Restauracao concluida com validacao de hash. Nenhuma divergencia detectada."
 }
 
 check_updates(){
@@ -280,3 +330,4 @@ case "$choice" in
   6) read -rp "Alvo (codex/claude): " t; uninstall_target "$t" ;;
   *) echo "Opcao invalida." ;;
 esac
+
