@@ -1,21 +1,18 @@
 #!/usr/bin/env bash
-# Gate de qualidade: valida TRACEABILITY_MATRIX.md antes de permitir conclusao.
-# Falha (exit 1) se existir requisito com status ❌ na coluna de status.
-# Uso: ./scripts/quality-gate.sh [caminho-da-matriz]
 set -euo pipefail
 MATRIX="${1:-TRACEABILITY_MATRIX.md}"
-if [ ! -f "$MATRIX" ]; then
- echo "GATE FALHOU: matriz nao encontrada: $MATRIX" >&2
- exit 1
-fi
-# Conta linhas de tabela onde a 3a coluna (status) contem ❌
-# Formato: | ID | Requisito | STATUS | Evidencia | Commit |
-# Usamos awk para extrair a 3a coluna e verificar se contem ❌
-FAILED=$(awk -F'|' 'NF>=4 && $4 ~ /❌/ {count++} END {print count+0}' "$MATRIX")
+MIN_ROWS=10
+if [ ! -f "$MATRIX" ]; then echo "GATE FALHOU: matriz nao encontrada" >&2; exit 1; fi
+PHYSICAL_LINES=$(wc -l < "$MATRIX")
+if [ "$PHYSICAL_LINES" -lt "$MIN_ROWS" ]; then echo "GATE FALHOU: apenas $PHYSICAL_LINES linhas fisicas (minimo $MIN_ROWS)" >&2; exit 1; fi
+WIDE_LINE=$(awk -F'|' 'NF>100 {print NR; exit}' "$MATRIX")
+if [ -n "$WIDE_LINE" ]; then echo "GATE FALHOU: linha $WIDE_LINE achatada" >&2; exit 1; fi
+VALID_ROWS=$(awk -F'|' 'NF>=4 && $2 !~ /ID/ && $2 !~ /^[-: ]*$/ {c++} END {print c+0}' "$MATRIX")
+if [ "$VALID_ROWS" -lt "$MIN_ROWS" ]; then echo "GATE FALHOU: apenas $VALID_ROWS requisitos validos" >&2; exit 1; fi
+FAILED=$(awk -F'|' 'NF>=4 && $4 ~ /\xe2\x9d\x8c/ {c++} END {print c+0}' "$MATRIX")
 if [ "$FAILED" -gt 0 ]; then
- echo "GATE FALHOU: $FAILED item(ns) com status NAO ATENDIDO na matriz." >&2
- awk -F'|' 'NF>=4 && $4 ~ /❌/ {gsub(/^[ \t]+|[ \t]+$/, "", $3); print " PENDENTE: " $3}' "$MATRIX" >&2
- echo "Conclusao BLOQUEADA ate os itens acima serem resolvidos com evidencia." >&2
- exit 1
+  echo "GATE FALHOU: $FAILED reprovado(s)" >&2
+  awk -F'|' 'NF>=4 && $4 ~ /\xe2\x9d\x8c/ {gsub(/^[ \t]+|[ \t]+$/, "", $3); print " PENDENTE: " $3}' "$MATRIX" >&2
+  exit 1
 fi
-echo "GATE OK: nenhum item reprovado na matriz. Conclusao liberada para revisao independente."
+echo "GATE OK: $VALID_ROWS requisitos validos, nenhum reprovado"
