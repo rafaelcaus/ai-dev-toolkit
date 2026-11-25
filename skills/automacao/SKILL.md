@@ -1,6 +1,6 @@
 ---
 name: automacao
-description: Acompanhamento automatico e supervisao continua de projetos, metas e trabalhos de longa duracao via Thread Automation/Heartbeat nativo e supervisor externo (Dot/Acessor).
+description: Acompanhamento automatico e supervisao continua de projetos, metas e trabalhos de longa duracao via Thread Automation/Heartbeat nativo e supervisor externo (Supervisor).
 ---
 
 # Automacao e Supervisao Continua
@@ -19,7 +19,7 @@ Ao aprovar plano complexo, oferecer via ferramenta nativa de perguntas (quando d
 | Opcao | Funcionamento |
 |-------|---------------|
 | 1. Automacao interna | A propria conversa monitora e retoma via Heartbeat. |
-| 2. Supervisor externo | Dot/Acessor acompanha, audita e orienta. |
+| 2. Supervisor externo | Supervisor acompanha, audita e orienta. |
 | 3. Ambos (recomendado) | Codex executa, Dot supervisiona. |
 | 4. Sem automacao | Execucao convencional. |
 
@@ -40,7 +40,7 @@ A cada execucao:
 6. Respeitar autorizacoes e prioridades.
 7. Encerrar agendamento apos conclusao validada (status PAUSED ou delete).
 
-## Supervisao externa (Dot/Acessor)
+## Supervisao externa (Supervisor)
 
 Supervisor independente acompanha a conversa original:
 - Audita progresso, commits e testes.
@@ -49,8 +49,7 @@ Supervisor independente acompanha a conversa original:
 - Evita conclusoes prematuras.
 - Nao executa; orienta.
 
-Versao particular do Rafael: ACESSOR como supervisor preferencial.
-Versao publica: Dot disponivel de cada usuario.
+Supervisor padrao: o agente de supervisao disponivel de cada usuario (ex.: Dot), ou supervisor externo autorizado pelo proprio usuario.
 
 ## Comandos naturais suportados
 

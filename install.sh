@@ -242,13 +242,33 @@ restore_backup(){
         echo "  restaurado: $name"
         ;;
       *.toml|*.md)
-        # Arquivos de texto: pode ter conversao CRLF/LF pelo Git no Windows, hash pode divergir legitimamente
-        cp "$f" "$agentsHome/$name" 2>/dev/null || true
-        echo "  restaurado: $name"
+        local target="$agentsHome/$name"
+        # Bloquear pasta homonima: cp aninharia o arquivo dentro dela com exit 0
+        if [ -d "$target" ]; then
+          echo "ERRO: conflito - $target e um diretorio existente. Restauracao abortada para preservar a pasta." >&2
+          exit 1
+        fi
+        if cp "$f" "$target" 2>/dev/null; then
+          # Validar tipo regular e conteudo com normalizacao CRLF
+          if [ ! -f "$target" ]; then
+            echo "ERRO: $target nao e um arquivo regular apos copia." >&2
+            exit 1
+          fi
+          local h_src=$(tr -d '\r' < "$f" | sha256sum | cut -d' ' -f1)
+          local h_dst=$(tr -d '\r' < "$target" | sha256sum | cut -d' ' -f1)
+          if [ "$h_src" != "$h_dst" ]; then
+            echo "ERRO: conteudo divergente apos restaurar $name (normalizado CRLF)." >&2
+            exit 1
+          fi
+          echo "  restaurado: $name"
+        else
+          echo "ERRO: falha ao copiar agente $name" >&2
+          exit 1
+        fi
         ;;
     esac
   done
-  echo "Restauracao concluida com validacao de hash. Nenhuma divergencia detectada."
+  echo "Restauracao concluida. Skills validadas por hash; agentes copiados com verificacao de erro."
 }
 
 check_updates(){
