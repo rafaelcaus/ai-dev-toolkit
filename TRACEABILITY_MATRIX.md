@@ -44,8 +44,8 @@
 |----|------------------|--------|-----------|-------------|
 | C01 | Procedência/licença dos 27 arquivos design-system | ✅ | LICENSE criado com MIT/Pexels/BM25/divergência documentada | f12a1e7 |
 | C02 | AGENTS.md e CLAUDE.md nativos (no repo) | ✅ | Ambos criados genericos na raiz do repo publico | e73516c |
-| C03 | README detalhado (17 skills + 16 agentes com exemplos) | ❌ | README atual lista nomes mas sem exemplos individuais | README.md |
-| C04 | CI com testes negativos (propriedade, conflito, corrupção, rollback) | ❌ | CI só tem testes positivos/sintáticos | .github/workflows/ci.yml |
+| C03 | README detalhado (17 skills + 16 agentes com exemplos) | ✅ | Tabelas detalhadas com exemplos + secoes de acionamento e transparencia | f286652 |
+| C04 | CI com testes negativos (propriedade, conflito, corrupção, rollback) | ✅ | Job negative-tests com 6 cenarios x 3 SOs, CI verde | feat(ci): negative-tests |
 | C05 | Reclassificar falha de subagentes (NÃO é limite de concorrência) | ✅ | Classificado como falha de transporte NEW_TASK; regra de máx. 3 agentes aplicada | Esta sessão |
 | C06 | Validar pacote PARTICULAR e integrações | ✅ | test-installer.ps1 PASS (preview, isolated install, dedup, hook merge, config/auth, idempotence, restore, conflito) + test-full-package-preview.ps1 PASS (108 op sem escrita). 1 colisão frontmatter orchestrator resolvida pelo instalador. | Commit 3426959, branch qa/codex-hardening-v1.7 |
 | C07 | Matriz completa de rastreabilidade | ✅ | Este arquivo (TRACEABILITY_MATRIX.md) | HEAD |
