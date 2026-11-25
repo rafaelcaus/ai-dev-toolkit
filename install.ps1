@@ -175,8 +175,18 @@ function Restore-FromBackup([string]$Backup, [string]$Target) {
     $manifest = Read-Manifest $manifestPath
     if (-not $manifest) { throw "MANIFEST.json ausente ou invalido em " + $Backup }
     $restoreTarget = if ($Target) { $Target } else { $manifest.target }
+    if ($restoreTarget -notin @("codex","claude")) { throw "Alvo invalido no manifesto: $restoreTarget" }
+    if ($manifest.target -and $manifest.target -notin @("codex","claude")) { throw "MANIFEST.target invalido: $($manifest.target)" }
+    if ($Target -and $manifest.target -and $Target -ne $manifest.target) { throw "Alvo informado difere do MANIFEST.target" }
     $destHome = Get-HomeDir $restoreTarget
     $agentsHome = Get-AgentsHome $restoreTarget
+    # Validate every entry and hash before writing anything.
+    foreach ($entry in @($manifest.entries)) {
+        if (-not $entry.path -or $entry.path -match '(^|[\/])..([\/]|$)' -or [IO.Path]::IsPathRooted($entry.path)) { throw "Caminho de backup invalido: $($entry.path)" }
+        $src = Join-Path $Backup $entry.path
+        if (-not (Test-Path -LiteralPath $src)) { throw "Entrada ausente no backup: $($entry.path)" }
+        if ($entry.hash -and (Compute-Hash $src) -ne $entry.hash.ToLowerInvariant()) { throw "Hash divergente no backup: $($entry.path)" }
+    }
     foreach ($entry in $manifest.entries) {
         $rel = $entry.path
         if ($rel -like "skills/*") {
@@ -188,11 +198,14 @@ function Restore-FromBackup([string]$Backup, [string]$Target) {
         if (Test-Path -LiteralPath $src) {
             New-Item -ItemType Directory -Force (Split-Path -Parent $dst) | Out-Null
             if ((Get-Item $src).PSIsContainer) {
+                if (Test-Path -LiteralPath $dst -PathType Leaf) { throw "Conflito: destino e arquivo, backup e pasta: $rel" }
                 if (Test-Path -LiteralPath $dst) { Remove-Item -LiteralPath $dst -Recurse -Force }
                 Copy-Item -LiteralPath $src -Destination $dst -Recurse -Force
             } else {
+                if (Test-Path -LiteralPath $dst -PathType Container) { throw "Conflito: destino e pasta, backup e arquivo: $rel" }
                 Copy-Item -LiteralPath $src -Destination $dst -Force
             }
+            if ((Compute-Hash $dst) -ne $entry.hash.ToLowerInvariant()) { throw "Falha de verificacao apos restaurar: $rel" }
             Write-Host ("  restaurado: " + $rel)
         } else {
             if (Test-Path -LiteralPath $dst) {
