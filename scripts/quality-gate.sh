@@ -11,6 +11,28 @@ if [ -n "$WIDE_LINE" ]; then echo "GATE FALHOU: linha $WIDE_LINE achatada" >&2; 
 REQUIRED_ROWS=$(awk -F'|' 'NF>=5 && $2 ~ /^[[:space:]]*(R|C|B)[0-9]+[[:space:]]*$/ {c++} END {print c+0}' "$MATRIX")
 if [ "$REQUIRED_ROWS" -lt "$MIN_ROWS" ]; then echo "GATE FALHOU: apenas $REQUIRED_ROWS requisitos com ID valido (minimo $MIN_ROWS)" >&2; exit 1; fi
 
+DUP_IDS=$(awk -F'|' 'NF>=5 && $2 ~ /^[[:space:]]*(R|C|B)[0-9]+[[:space:]]*$/ {gsub(/^[ \t]+|[ \t]+$/,"",$2); print $2}' "$MATRIX" | sort | uniq -d | wc -l)
+if [ "$DUP_IDS" -gt 0 ]; then
+  echo "GATE FALHOU: IDs duplicados detectados:" >&2
+  awk -F'|' 'NF>=5 && $2 ~ /^[[:space:]]*(R|C|B)[0-9]+[[:space:]]*$/ {gsub(/^[ \t]+|[ \t]+$/,"",$2); print $2}' "$MATRIX" | sort | uniq -d >&2
+  exit 1
+fi
+
+BAD_COUNT=$(awk -F'|' 'NF>=5 && $2 ~ /^[[:space:]]*(R|C|B)[0-9]+/ {
+  id=$2; gsub(/^[ \t]+|[ \t]+$/, "", id)
+  if (id ~ /^B/) st=$5; else st=$4
+  if (st !~ /\xe2\x9c\x85|\xe2\x9a\xa0|\xe2\x9d\x8c|\xf0\x9f\x94\x92|\xf0\x9f\x94\x84|OK/) c++
+} END {print c+0}' "$MATRIX")
+if [ "$BAD_COUNT" -gt 0 ]; then
+  echo "GATE FALHOU: $BAD_COUNT status invalido(s):" >&2
+  awk -F'|' 'NF>=5 && $2 ~ /^[[:space:]]*(R|C|B)[0-9]+/ {
+    id=$2; gsub(/^[ \t]+|[ \t]+$/, "", id)
+    if (id ~ /^B/) st=$5; else st=$4
+    if (st !~ /\xe2\x9c\x85|\xe2\x9a\xa0|\xe2\x9d\x8c|\xf0\x9f\x94\x92|\xf0\x9f\x94\x84|OK/) print "  STATUS_INVALIDO: " id " -> " st
+  }' "$MATRIX" >&2
+  exit 1
+fi
+
 # Colunas: R/C -> ID=$2 Req=$3 Status=$4 Evid=$5 Commit=$6
 #          B   -> ID=$2 Mecanismo=$3 Plataforma=$4 Status=$5 Notas=$6
 REPROVED=$(awk -F'|' 'NF>=5 && $2 ~ /^[[:space:]]*(R|C|B)[0-9]+/ {
