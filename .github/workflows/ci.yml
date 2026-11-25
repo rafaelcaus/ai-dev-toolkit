@@ -114,6 +114,14 @@ jobs:
           chmod +x ./install.sh
           ./install.sh --target codex
 
+  quality-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar matriz de rastreabilidade (gate de conclusao)
+        run: |
+          chmod +x ./scripts/quality-gate.sh
+          ./scripts/quality-gate.sh TRACEABILITY_MATRIX.md
   negative-tests:
     strategy:
       matrix:
