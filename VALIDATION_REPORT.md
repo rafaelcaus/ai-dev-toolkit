@@ -84,3 +84,12 @@ Issue #23221 (openai/codex): bug aberto, titulo "Codex responses are fully neste
 - CI: https://github.com/rafaelcaus/ai-dev-toolkit/actions
 - Plano de memoria: https://github.com/rafaelcaus/ai-dev-toolkit/blob/main/AI_DEV_MEMORY_PLAN.md
 
+
+## Atualizacao 2026-11-25 - Ciclo pos-auditoria v3
+
+- PR #1 merged em main (commit 5f13fd8): restore de agentes (install.sh) com bloqueio de pasta homonima + validacao de hash CRLF; install.ps1 com $destHome definido e caminho nativo de agentes; automacao/SKILL.md generica.
+- CI verde: run 45605819626 (10/10 jobs) e 45606817621 (matriz atualizada).
+- Matriz atualizada: C08/C09/C10 adicionadas (commit 9c9634c).
+- Qualidade de gates: quality-gate.sh validando IDs/estados/evidencias (GATE OK 40 requisitos).
+- Testes: 5 cenarios de regressao PASS em WSL; apply real em perfil isolado Windows com 17 skills + 16 agentes.
+- Pendencias conhecidas documentadas: subagentes NEW_TASK payload vazio (T14); blocos recolhidos Codex Desktop (issues 22334/34418/23221).
