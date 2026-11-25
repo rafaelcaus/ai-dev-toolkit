@@ -63,6 +63,10 @@ install.sh buscava agentes Claude em agents/*.md mas os perfis ficam em agents/c
 
 install.ps1 em perfil descartavel: instalar 17 skills -> desinstalar 0 -> restaurar 17 skills. Confirmado em adicao ao CI multiplataforma.
 
+### Bug corrigido: menu interativo POSIX (commit 073de34)
+
+c=$(show_menu) capturava o banner inteiro na substituicao de comando; o case nunca casava e toda escolha caia em Opcao invalida. Corrigido para chamar show_menu diretamente e usar a variavel global choice. Validado no WSL Ubuntu: opcoes 1 (PREVIA codex), 3 (Lovable), 4 (updates), 9 (invalida). install.ps1 verificado: sem o mesmo defeito.
+
 ### Confirmacao de issue rastreada
 
 Issue #23221 (openai/codex): bug aberto, titulo "Codex responses are fully nested within collapsed <Worked for {N}s> sections", labels bug + app, confirmado via GitHub API em 2026-11-25. Nenhuma configuracao nativa disponivel para expandir blocos; limitacao documentada e valida.
@@ -79,3 +83,4 @@ Issue #23221 (openai/codex): bug aberto, titulo "Codex responses are fully neste
 - Commit: https://github.com/rafaelcaus/ai-dev-toolkit/commit/9ea0d1c
 - CI: https://github.com/rafaelcaus/ai-dev-toolkit/actions
 - Plano de memoria: https://github.com/rafaelcaus/ai-dev-toolkit/blob/main/AI_DEV_MEMORY_PLAN.md
+
