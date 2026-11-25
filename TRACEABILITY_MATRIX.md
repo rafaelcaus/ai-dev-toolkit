@@ -35,7 +35,7 @@
 | R20 | Integração Lovable MCP | ✅ | Ciclo CRUD + massa 17/17 validado | e954579 |
 | R21 | Integração Claude Code | ✅ | Agentes MD + ciclo instalar/desinstalar/restaurar | 6e1a30a |
 | R22 | Repositório público independente do privado | ✅ | rafaelcaus/ai-dev-toolkit sem histórico privado | GitHub |
-| R23 | Pacote PARTICULAR validado | ❌ | Validação pendente (não confundir com público) | — |
+| R23 | Pacote PARTICULAR validado | ✅ | 2 suites de teste PASS em commit 3426959 | tests/test-installer.ps1 |
 | R24 | Barreira técnica de conclusão | ❌ | NÃO EXISTE; conclusão depende apenas de disciplina comportamental | Investigação sistêmica |
 
 ## Correções da Auditoria Independente v2
@@ -47,7 +47,7 @@
 | C03 | README detalhado (17 skills + 16 agentes com exemplos) | ❌ | README atual lista nomes mas sem exemplos individuais | README.md |
 | C04 | CI com testes negativos (propriedade, conflito, corrupção, rollback) | ❌ | CI só tem testes positivos/sintáticos | .github/workflows/ci.yml |
 | C05 | Reclassificar falha de subagentes (NÃO é limite de concorrência) | ✅ | Classificado como falha de transporte NEW_TASK; regra de máx. 3 agentes aplicada | Esta sessão |
-| C06 | Validar pacote PARTICULAR e integrações | ❌ | Apenas o público foi validado | — |
+| C06 | Validar pacote PARTICULAR e integrações | ✅ | test-installer.ps1 PASS (preview, isolated install, dedup, hook merge, config/auth, idempotence, restore, conflito) + test-full-package-preview.ps1 PASS (108 op sem escrita). 1 colisão frontmatter orchestrator resolvida pelo instalador. | Commit 3426959, branch qa/codex-hardening-v1.7 |
 | C07 | Matriz completa de rastreabilidade | ✅ | Este arquivo (TRACEABILITY_MATRIX.md) | HEAD |
 
 ## Barreiras Técnicas de Qualidade (a implementar)
